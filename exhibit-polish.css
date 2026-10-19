@@ -1,0 +1,125 @@
+/* Refinement of the approved stone exhibit. Typography roles, not isolated sizes. */
+:root {
+  --font-display: 'Songti SC', 'Noto Serif CJK SC', 'SimSun', Georgia, serif;
+  --font-reading: 'Microsoft YaHei', 'PingFang SC', 'Noto Sans CJK SC', sans-serif;
+  --type-note: .8125rem;
+  --type-ui: .875rem;
+  --type-body: 1rem;
+  --type-section: 1.125rem;
+  --type-title: clamp(1.75rem, 2.6vw, 2.5rem);
+  --ease-response: cubic-bezier(.16, 1, .3, 1);
+  --muted: #b0ab9e;
+  --page-inset: clamp(24px, 3vw, 48px);
+}
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { font-family: var(--font-reading); }
+::selection { background: #c9a16b; color: #10110f; }
+dialog { scrollbar-width: thin; scrollbar-color: #80715b #141512; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #e5c794; outline-offset: 5px; }
+.museum-header { padding: 20px var(--page-inset); align-items: center; }
+.brand strong { font-family: var(--font-display); font-weight: 400; line-height: 1.15; letter-spacing: .025em; }
+.brand small { font-size: .75rem; line-height: 1.5; letter-spacing: .22em; }
+.main-navigation { gap: 24px; padding: 0; }
+.main-navigation button { font: 400 var(--type-ui)/1.5 var(--font-reading); letter-spacing: .04em; min-height: 44px; padding: 8px 12px; transition: color 160ms ease; }
+.main-navigation button.active:after { bottom: 0; }
+.sound-toggle { width: 44px; height: 44px; padding: 12px; }
+.sound-controls { align-items: center; padding: 0; gap: 8px; }
+.sound-volume { height: 24px; margin: 0; background: transparent; }
+.sound-volume::-webkit-slider-runnable-track { height: 2px; background: #706754; }
+.sound-volume::-webkit-slider-thumb { width: 8px; height: 8px; margin-top: -3px; }
+.sound-volume::-moz-range-track { height: 2px; background: #706754; }
+.sound-volume::-moz-range-thumb { width: 8px; height: 8px; }
+.exhibit { user-select: auto; -webkit-user-select: auto; }
+.archive-deck { user-select: none; -webkit-user-select: none; }
+.exhibit-info { left: var(--page-inset); top: clamp(118px, 14vh, 155px); width: min(25%, 320px); }
+.exhibit-info dl div { padding: 12px 0; font: 400 var(--type-ui)/1.5 var(--font-reading); letter-spacing: 0; }
+.exhibit-info dt { color: var(--muted); }
+.exhibit-info dd, #theme-fraction, #theme-number, .card-id { font-variant-numeric: tabular-nums; }
+.exhibit-info > p { margin-top: 16px; font-size: .75rem; line-height: 1.6; letter-spacing: .025em; color: var(--muted); }
+.active-caption h1 { font: 400 var(--type-title)/1.25 var(--font-display); letter-spacing: .04em; text-wrap: balance; }
+.active-caption i { margin: 0 16px; }
+.open-active { font: 400 var(--type-ui)/1.5 var(--font-reading); min-height: 44px; padding: 10px 6px; letter-spacing: .08em; }
+.exhibit-bottom { left: var(--page-inset); right: var(--page-inset); grid-template-columns: 160px 1fr 160px; gap: 24px; bottom: 24px; }
+.drag-guide { font: 400 var(--type-note)/1.5 var(--font-reading); gap: 12px; padding-top: 8px; letter-spacing: .025em; }
+.drag-guide svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.3; flex-shrink: 0; }
+.theme-progress button { font: 400 var(--type-note)/1.5 var(--font-reading); min-height: 52px; padding: 16px 8px 8px 0; letter-spacing: .025em; }
+.switch-controls { gap: 12px; align-items: center; }
+.switch-controls > span { font-size: var(--type-note); margin: 0; letter-spacing: .04em; }
+.switch-controls button { width: 44px; height: 44px; padding: 12px; }
+.switch-controls button, .sound-toggle, .open-active, .all-archives, .video-trigger { transition: transform 140ms var(--ease-response), color 160ms ease; }
+.switch-controls button:not(:disabled):active, .sound-toggle:active, .open-active:active, .all-archives:active, .video-trigger:active { transform: scale(.96); }
+.hover-rings { transition: opacity 160ms ease; }
+dialog[open] { animation: expand 220ms var(--ease-response); }
+.dialog-close { top: 16px; margin: 16px 16px -60px 0; display: grid; place-items: center; }
+.dialog-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+.archive-directory { padding: 48px; }
+.archive-directory > h2, .project-copy > h2, .detail-layout h2, .video-content h2 { font: 400 var(--type-title)/1.3 var(--font-display); letter-spacing: .04em; margin: 24px 0 16px; text-wrap: balance; overflow-wrap: break-word; }
+.directory-note { font-size: var(--type-body); line-height: 1.8; max-width: 36em; color: var(--muted); text-wrap: pretty; }
+.eyebrow { font: 400 var(--type-note)/1.6 var(--font-reading); letter-spacing: .06em; color: var(--gold); }
+.archive-directory section > h3 { font: 400 var(--type-section)/1.5 var(--font-display); letter-spacing: .04em; }
+.directory-grid { gap: 24px; margin: 32px 0; }
+.archive-card .card-copy { padding: 24px; }
+.archive-card .card-copy h3 { font: 400 1.5rem/1.35 var(--font-display); letter-spacing: .04em; margin: 12px 0; text-wrap: balance; }
+.card-copy > p:not(.card-id) { font-size: var(--type-body); line-height: 1.75; color: var(--muted); margin: 12px 0 0; text-wrap: pretty; }
+.card-id { font: 400 var(--type-note)/1.5 var(--font-reading); letter-spacing: .06em; }
+.ai-badge, .tags span { font: 400 .75rem/1.5 var(--font-reading); letter-spacing: .025em; }
+.tags { gap: 8px; }
+.tags span { padding: 4px 8px; }
+.all-archives, .video-trigger { font: 400 var(--type-ui)/1.5 var(--font-reading); min-height: 44px; }
+.detail-layout article { padding: 48px 32px 32px; }
+.detail-summary, .interpretation p, .project-copy p { font: 400 var(--type-body)/1.8 var(--font-reading); color: #d0cbbf; max-width: 32em; text-wrap: pretty; overflow-wrap: break-word; }
+.interpretation { margin-top: 32px; padding-top: 16px; }
+.interpretation h3, .project-copy h3 { font: 400 var(--type-section)/1.5 var(--font-display); letter-spacing: .04em; color: #d7b889; margin: 8px 0 12px; }
+.source, .detail-layout figcaption { font-size: var(--type-note); line-height: 1.8; color: var(--muted); overflow-wrap: break-word; }
+.project-copy { padding: 48px; }
+.project-copy section { margin-top: 32px; padding-top: 16px; }
+.video-content > p:not(.eyebrow), .video-empty p { font-size: var(--type-body); line-height: 1.8; }
+@media (max-width: 1100px) and (min-width: 701px) {
+  .exhibit-info { width: 26%; }
+  .exhibit-info dl div { font-size: var(--type-note); }
+  .main-navigation { gap: 8px; }
+  .brand strong { font-size: 2rem; }
+  .brand small { font-size: .6875rem; }
+  .exhibit-bottom { grid-template-columns: 1fr 144px; }
+  .drag-guide { display: none; }
+}
+@media (max-width: 700px) {
+  :root { --page-inset: 20px; }
+  .museum-header { padding: 16px var(--page-inset); }
+  .brand strong { font-size: 1.875rem; }
+  .brand small { font-size: .6875rem; letter-spacing: .13em; }
+  .main-navigation { margin-top: 12px; gap: 12px; }
+  .main-navigation button { font-size: var(--type-note); padding: 8px; }
+  .sound-controls { gap: 0; }
+  .sound-volume { width: 36px; }
+  .exhibit-info { left: var(--page-inset); top: 135px; width: min(72%, 280px); }
+  .exhibit-info dl div { font-size: .75rem; padding: 5px 0; }
+  .exhibit-info > p { margin-top: 8px; font-size: .75rem; }
+  .archive-folder { left: 56%; top: 33svh; width: min(44svh, 70vw); height: 43svh; }
+  .active-caption { left: 50%; top: 77svh; }
+  .active-caption h1 { font-size: 1.5rem; margin-bottom: 0; }
+  .active-caption i { font-size: 1.25rem; margin: 0 12px; }
+  .open-active { font-size: .8125rem; }
+  .exhibit-bottom { left: var(--page-inset); right: var(--page-inset); bottom: 12px; grid-template-columns: 1fr; gap: 0; }
+  .theme-progress { grid-column: 1; grid-row: 1; }
+  .theme-progress button { font-size: .75rem; padding: 12px 2px 0; min-height: 48px; }
+  .theme-progress button > span { display: block; margin: 2px 0 0; white-space: nowrap; }
+  .switch-controls { position: absolute; bottom: 58px; right: 0; gap: 0; }
+  .switch-controls > span { font-size: .75rem; margin-right: 8px; }
+  .switch-controls button { width: 44px; height: 44px; }
+  .archive-directory, .project-copy { padding: 48px 24px 24px; }
+  .archive-directory > h2, .project-copy > h2, .detail-layout h2 { font-size: 1.75rem; }
+  .detail-layout article { padding: 24px; }
+  .directory-grid { gap: 24px; }
+}
+@media (max-height: 650px) and (min-width: 701px) {
+  .museum-header { padding-top: 12px; }
+  .exhibit-info { top: 100px; }
+  .exhibit-info dl div { padding: 8px 0; }
+  .active-caption { top: 76vh; }
+  .active-caption h1 { font-size: 1.5rem; }
+  .exhibit-bottom { bottom: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hover-rings { transition: none; }
+}

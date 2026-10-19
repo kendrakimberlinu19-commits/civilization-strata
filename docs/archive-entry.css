@@ -1,0 +1,8 @@
+.archive-entry{position:fixed;inset:0;z-index:90;perspective:1700px;overflow:clip;outline:0;touch-action:none;cursor:progress}
+.archive-entry .entry-actor{pointer-events:none!important;will-change:transform,opacity}
+.archive-entry .stone-object{pointer-events:none}
+.archive-entry .hover-rings{display:none}
+.archive-entry .entry-ui{z-index:20;user-select:none}
+.entry-busy .tools-story{overflow:hidden}
+.story-arriving .story-hero-media,.story-arriving .story-hero h1>span,.story-arriving .story-hero-nav,.story-arriving .story-top,.story-arriving .story-hero-bottom{opacity:0}
+@media(prefers-reduced-motion:reduce){.archive-entry{display:none}}

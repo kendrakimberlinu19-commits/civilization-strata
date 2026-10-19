@@ -1,0 +1,12 @@
+{
+  "name": "civilization-strata",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "start:lan": "node server.mjs --lan",
+    "test": "node --test tests/check-data.mjs tests/deck-physics.mjs",
+    "build": "node scripts/build-static.mjs"
+  }
+}
