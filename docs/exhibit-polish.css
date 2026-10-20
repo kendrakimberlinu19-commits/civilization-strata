@@ -189,3 +189,25 @@ dialog[open] { animation: expand 220ms var(--ease-response); }
  .info-title-line>span,.exhibit-info dl div,.exhibit-info>p { transition:none; }
  .exhibit-info.is-travelling .info-title-line>span { transform:none; }
 }
+
+/* A compact lower-right dock leaves the low end of the archive arc clear. */
+.exhibit-bottom {
+ --dock-width:min(640px,calc(100vw - 48px));
+ width:var(--dock-width); right:auto;
+ left:clamp(calc(var(--dock-width)/2 + 24px),63%,calc(100% - var(--dock-width)/2 - 24px));
+ transform:translateX(-50%); bottom:20px;
+ grid-template-columns:minmax(0,1fr) 144px; gap:16px; align-items:center;
+ pointer-events:none;
+}
+.exhibit-bottom .drag-guide { display:none; }
+.exhibit-bottom .theme-progress,.exhibit-bottom .switch-controls { pointer-events:auto; }
+.exhibit-bottom .theme-progress { grid-column:1; grid-row:1; }
+.exhibit-bottom .theme-progress button { font-size:12px; min-height:48px; padding-top:14px; white-space:nowrap; }
+.exhibit-bottom .progress-line { height:2px; }
+.exhibit-bottom .switch-controls { position:static; grid-column:2; grid-row:1; gap:4px; }
+.exhibit-bottom .switch-controls>span { font-size:12px; margin-right:4px; }
+@media(max-width:700px) {
+ .exhibit-bottom { width:calc(100% - 40px); left:50%; bottom:12px; display:block; }
+ .exhibit-bottom .theme-progress button { font-size:11px; padding-top:12px; }
+ .exhibit-bottom .switch-controls { position:absolute; right:0; bottom:52px; }
+}
