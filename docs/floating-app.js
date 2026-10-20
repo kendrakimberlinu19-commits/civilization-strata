@@ -2,6 +2,7 @@ import {categories,cards,featureVideo} from './data/archive.js';
 import {exhibit} from './data/exhibit.js?v=20261020-dial';
 import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
 import {createAmbientSound} from './ambient-sound.js';
+import {createGestureControl} from './gesture-control.js?v=20261020-gestures';
 import {createThemeStory} from './tools-story.js?v=20261020-photo-reveal';
 import {themeStories} from './data/theme-stories.js';
 import {createArchiveEntry} from './archive-entry.js?v=20261020-photo-reveal';
@@ -9,6 +10,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const emit=(name,payload)=>window.dispatchEvent(new CustomEvent(`strata:${name}`,{detail:payload}));
 const main=document.querySelector('#main'),detail=document.querySelector('#detail'),archive=document.querySelector('#archive-dialog'),project=document.querySelector('#project-dialog'),video=document.querySelector('#video-dialog');
 const dialogs=[detail,archive,project,video],origins=new WeakMap();
+let gestureControl;const modalOrder=[];
 main.innerHTML=`<section class="exhibit surface" aria-label="文明地层斜向档案展台"><aside class="exhibit-info" aria-label="当前档案信息"><h1 class="info-theme-heading" aria-label="当前主题"><span class="info-title-line"><span id="info-title-first"></span></span><span class="info-title-line"><span id="info-title-second"></span></span></h1><dl><div><dt>当前主题</dt><dd id="info-theme"></dd></div><div><dt>档案编号</dt><dd id="info-id"></dd></div><div><dt>收录档案</dt><dd id="info-count"></dd></div></dl><p>CIVILIZATION STRATA · AI 演绎</p></aside><div id="floating-stage"></div><div class="active-caption"><h1><span id="theme-number"></span><i>/</i><span id="theme-title"></span></h1><button class="open-active">开启档案 ↗</button></div><div class="exhibit-bottom archive-dial"><img class="dial-texture" src="${esc(exhibit.navigationDial.imagePath)}" alt="" aria-hidden="true"><nav class="theme-progress" aria-label="主题轮盘"><svg class="dial-orbit" viewBox="0 0 240 240" aria-hidden="true"><circle class="dial-track" cx="120" cy="120" r="88"/><circle class="dial-progress" cx="120" cy="120" r="88" pathLength="100"/></svg>${categories.map((c,i)=>`<button data-theme="${esc(c.id)}" style="--dial-index:${i}" aria-label="${c.number} ${esc(c.name)}"><b>${c.number}</b><span>${esc(c.name)}</span></button>`).join('')}</nav><div class="dial-centre"><span class="dial-kicker">地层索引</span><span id="dial-theme"></span><span id="theme-fraction"></span></div><div class="switch-controls"><button class="previous-theme" aria-label="上一份地层档案"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></button><button class="next-theme" aria-label="下一份地层档案"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg></button></div></div></section>`;
 function updateTheme(c,index){document.querySelector('#dial-theme').textContent=c.name;document.querySelector('#info-title-first').textContent=c.name.slice(0,2);document.querySelector('#info-title-second').textContent=c.name.slice(2);document.querySelector('.info-theme-heading').setAttribute('aria-label',c.name);document.querySelector('#info-theme').textContent=c.name;document.querySelector('#info-id').textContent=`STRATUM ${c.number}`;document.querySelector('#info-count').textContent=`${String(cards.filter(x=>x.category===c.id).length).padStart(2,'0')} 份`;document.querySelector('#theme-number').textContent=c.number;document.querySelector('#theme-title').textContent=c.name;document.querySelector('#theme-fraction').textContent=`${c.number} / ${String(categories.length).padStart(2,'0')}`;document.querySelectorAll('[data-theme]').forEach(b=>{if(b.dataset.theme===c.id)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});document.querySelector('.previous-theme').disabled=index===0;document.querySelector('.next-theme').disabled=index===categories.length-1;}
 const deck=createFloatingDeck({container:document.querySelector('#floating-stage'),categories,esc,onChange:updateTheme,onEnter:openCategory,emit});
@@ -25,8 +27,8 @@ function openTheme(id,{animate=true,updateHistory=true}={}){
 }
 function closeTheme(){currentPage?.close();currentPage=null;setNav('home');if(location.hash.startsWith('#archive/'))history.replaceState(null,'',location.pathname+location.search);}
 function setNav(value){document.querySelectorAll('[data-nav]').forEach(b=>b.classList.toggle('active',b.dataset.nav===value))}
-function show(dialog,nav){origins.set(dialog,document.activeElement);deck.freeze();document.body.classList.add('reading');if(!dialog.open)dialog.showModal();setNav(nav);}
-function restore(dialog){if(!dialogs.some(d=>d.open)){document.body.classList.remove('reading');setNav(currentPage?.isOpen?'archive':'home')}origins.get(dialog)?.focus({preventScroll:true});}
+function show(dialog,nav){origins.set(dialog,document.activeElement);deck.freeze();document.body.classList.add('reading');if(!dialog.open){dialog.showModal();modalOrder.push(dialog)}gestureControl?.mount(dialog);setNav(nav);}
+function restore(dialog){const index=modalOrder.indexOf(dialog);if(index>=0)modalOrder.splice(index,1);gestureControl?.mount(modalOrder.at(-1)||document.body);if(!dialogs.some(d=>d.open)){document.body.classList.remove('reading');setNav(currentPage?.isOpen?'archive':'home')}origins.get(dialog)?.focus({preventScroll:true});}
 function closeButton(dialog,label){return `<button class="dialog-close" aria-label="${label}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 5 14 14M19 5 5 19"/></svg></button>`}
 function bindClose(dialog){dialog.querySelector('.dialog-close').onclick=()=>dialog.close();}
 function cardMarkup(x){return `<button class="archive-card" data-card="${esc(x.id)}"><div class="card-image"><img src="${esc(x.imagePath)}" alt="${esc(x.name)} · ${esc(x.ai.label)}" loading="lazy" decoding="async"><span class="ai-badge">${esc(x.ai.label)}</span><span class="card-open">↗</span></div><div class="card-copy"><p class="card-id">${esc(x.id)}</p><h3>${esc(x.name)}</h3><p>${esc(x.summary)}</p><div class="tags">${x.tags.map(t=>`<span>${esc(t)}</span>`).join('')}</div></div></button>`}
@@ -45,3 +47,9 @@ createAmbientSound(document.querySelector('.sound-toggle'),document.querySelecto
 
 function applyRoute(){const id=location.hash.match(/^#archive\/(tools|ritual|cities|arts)$/)?.[1];if(id)openTheme(id,{animate:false,updateHistory:false});else if(currentPage?.isOpen){currentPage.close();currentPage=null;setNav('home')}}
 window.addEventListener('popstate',applyRoute);applyRoute();
+gestureControl=createGestureControl({context:()=>archiveEntry.running?'busy':dialogs.some(d=>d.open)?'dialog':currentPage?.isOpen?'story':'deck',onAction:action=>{
+ if(archiveEntry.running)return;
+ if(action==='back'){const top=modalOrder.at(-1);if(top)top.close();else if(currentPage?.isOpen)closeTheme();return}
+ if(currentPage?.isOpen||dialogs.some(d=>d.open))return;
+ if(action==='open')deck.open();else if(action==='next')deck.step(1);else if(action==='previous')deck.step(-1);
+}});
