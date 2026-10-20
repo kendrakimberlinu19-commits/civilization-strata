@@ -30,7 +30,7 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
  function render(){
   const p=motion.position,index=Math.round(bound(p));deck.dataset.motion=motion.mode;deck.dataset.velocity=motion.velocity.toFixed(3);deck.style.setProperty('--deck-position',p);
   for(let i=0;i<folders.length;i++){
-   const f=folders[i],d=i-p,a=Math.abs(d),opacity=d<0?Math.max(0,1+d*2.3):Math.max(.32,1-d*.42);
+   const f=folders[i],d=i-p,a=Math.abs(d),opacity=Math.max(.32,1-a*.42);
    f.style.setProperty('--slide-x',`${d*spacing}px`);f.style.setProperty('--slide-y',`${-Math.min(a,1)*18}px`);f.style.setProperty('--base-roll',`${8-d*19}deg`);f.style.setProperty('--base-yaw',`${-9-Math.min(a,1)*7}deg`);f.style.setProperty('--scale',Math.max(.77,1-a*.08));f.style.opacity=opacity;
    f.style.zIndex=String(10-Math.round(a*3));f.style.pointerEvents=opacity<.1?'none':'auto';f.inert=opacity<.1||a>1.7;f.classList.toggle('is-current',i===index);
   }
@@ -41,6 +41,7 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
  function schedule(){if(!frame)frame=requestAnimationFrame(tick)}
  function select(index,instant=false){motion.select(bound(index),instant||reduced.matches);folders.forEach(reset);last=0;schedule()}
  function enter(index){select(index,true);render();emit('folder-enter',{categoryId:categories[index].id});onEnter(categories[index].id)}
+ function activate(index){if(index!==Math.round(bound(motion.position)))select(index);else enter(index)}
  deck.addEventListener('pointerdown',e=>{if(e.button!==0||drag||!e.isPrimary)return;motion.beginDrag();if(frame)cancelAnimationFrame(frame);frame=0;last=0;drag={id:e.pointerId,x:e.clientX,y:e.clientY,start:motion.position,lastPosition:motion.position,time:e.timeStamp,velocity:0,moved:false,folder:e.target.closest('[data-folder]')};deck.setPointerCapture(e.pointerId)});
  deck.addEventListener('pointermove',e=>{
   if(!drag||drag.id!==e.pointerId)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
@@ -49,12 +50,12 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
   if(!drag.moved)return;motion.dragTo(drag.start-dx/spacing);const dt=Math.max(.001,(e.timeStamp-drag.time)/1000),v=(motion.position-drag.lastPosition)/dt;drag.velocity+=(v-drag.velocity)*(1-Math.exp(-dt/.045));drag.lastPosition=motion.position;drag.time=e.timeStamp;schedule();
  });
  function release(e,cancel=false){if(!drag||drag.id!==e.pointerId)return;const done=drag;drag=null;deck.classList.remove('is-dragging');suppressed=performance.now()+450;if(deck.hasPointerCapture(e.pointerId))deck.releasePointerCapture(e.pointerId);
-  if(!cancel&&!done.moved&&done.folder){enter(folders.indexOf(done.folder));return}
+  if(!cancel&&!done.moved&&done.folder){activate(folders.indexOf(done.folder));return}
   folders.forEach(reset);motion.release(cancel||e.timeStamp-done.time>100?0:done.velocity);if(reduced.matches)motion.select(Math.round(bound(motion.position)),true);last=0;schedule();
  }
  deck.addEventListener('pointerup',e=>release(e));deck.addEventListener('pointercancel',e=>release(e,true));deck.addEventListener('lostpointercapture',()=>{if(drag){drag=null;deck.classList.remove('is-dragging');select(Math.round(bound(motion.position)))}});
  folders.forEach((f,i)=>{
-  f.addEventListener('click',e=>{if(e.detail===0||performance.now()>suppressed)enter(i)});
+  f.addEventListener('click',e=>{if(e.detail===0||performance.now()>suppressed)activate(i)});
   f.addEventListener('pointerenter',e=>{if(drag||motion.moving||e.pointerType==='touch')return;f.classList.add('is-hovered');dust.hover(f)});
   f.addEventListener('pointermove',e=>{if(drag||motion.moving||reduced.matches||e.pointerType==='touch')return;if(!f.classList.contains('is-hovered')){f.classList.add('is-hovered');dust.hover(f)}const r=f.getBoundingClientRect(),x=Math.max(-1,Math.min(1,(e.clientX-r.left-r.width/2)/(r.width/2))),y=Math.max(-1,Math.min(1,(e.clientY-r.top-r.height/2)/(r.height/2)));trackTilt(f,x,y)});
   f.addEventListener('pointerleave',()=>reset(f));

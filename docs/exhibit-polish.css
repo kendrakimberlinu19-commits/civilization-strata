@@ -31,7 +31,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .sound-volume::-moz-range-thumb { width: 8px; height: 8px; }
 .exhibit { user-select: auto; -webkit-user-select: auto; }
 .archive-deck { user-select: none; -webkit-user-select: none; }
-.exhibit-info { left: var(--page-inset); top: clamp(118px, 14vh, 155px); width: min(25%, 320px); }
+.exhibit-info { left: var(--page-inset); top: clamp(118px, 14vh, 155px); width: min(25%, 320px); background:#030404ed; }
 .exhibit-info dl div { padding: 12px 0; font: 400 var(--type-ui)/1.5 var(--font-reading); letter-spacing: 0; }
 .exhibit-info dt { color: var(--muted); }
 .exhibit-info dd, #theme-fraction, #theme-number, .card-id { font-variant-numeric: tabular-nums; }
