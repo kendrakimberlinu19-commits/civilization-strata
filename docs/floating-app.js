@@ -1,6 +1,6 @@
 import {categories,cards,featureVideo} from './data/archive.js';
 import {exhibit} from './data/exhibit.js?v=20261020-dial';
-import {createFloatingDeck} from './floating-deck.js?v=20261020-arc';
+import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
 import {createAmbientSound} from './ambient-sound.js';
 import {createThemeStory} from './tools-story.js';
 import {themeStories} from './data/theme-stories.js';

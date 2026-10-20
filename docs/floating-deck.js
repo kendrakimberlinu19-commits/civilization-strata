@@ -29,6 +29,8 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
  function reset(f){f.classList.remove('is-hovered');trackTilt(f,0,0);dust.leave(f)}
  function render(){
   const p=motion.position,index=Math.round(bound(p));deck.dataset.motion=motion.mode;deck.dataset.velocity=motion.velocity.toFixed(3);deck.style.setProperty('--deck-position',p);
+  // Rotate the stone in step with the inertial track; labels remain upright.
+  document.querySelector('.archive-dial').style.setProperty('--dial-turn',`${-p*90}deg`);
   for(let i=0;i<folders.length;i++){
    const f=folders[i],d=i-p,a=Math.abs(d),opacity=Math.max(.25,1-a*.16);
    // A continuous bowed track: every object follows its position and tangent,
