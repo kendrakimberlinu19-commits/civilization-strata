@@ -14,7 +14,7 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
   <section class="story-hero" id="story-entry" aria-labelledby="tools-page-title">
    <div class="story-hero-pin">
     <div class="story-hero-media"><img src="${esc(copy.heroImage)}" alt="${esc(copy.name)}主题场景 · AI 概念演绎" fetchpriority="high"><div class="story-hero-shade"></div></div>
-    <h1 id="tools-page-title"><span class="story-word-first">${esc(copy.title[0])}</span><span class="story-word-second">${esc(copy.title[1])}</span></h1>
+    <h1 id="tools-page-title"><span class="story-word-first"><span class="story-hero-word-text">${esc(copy.title[0])}</span></span><span class="story-word-second"><span class="story-hero-word-text">${esc(copy.title[1])}</span></span></h1>
     <nav class="story-hero-nav" aria-label="主题章节"><button data-jump="story-intro">进入主题 ${arrow}</button><button data-jump="story-records">遗存档案</button><button data-jump="story-material">材料阅读</button><span>${esc(copy.en)}</span></nav>
     <div class="story-hero-bottom"><span>AI 演绎 · 概念示范</span><button data-jump="story-intro">向下阅读 <span aria-hidden="true">↓</span></button></div>
    </div>
@@ -22,11 +22,11 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
   <section class="story-intro story-section" id="story-intro" aria-labelledby="story-intro-title">
    <h2 id="story-intro-title">${esc(copy.subtitle)}</h2>
    <div class="story-intro-copy"><p>${esc(copy.introduction)}</p><p class="story-note">${esc(copy.note)}</p></div>
-   <div class="story-contact-sheet">${contact.map((c,i)=>`<figure><div><img src="${esc(c.imagePath)}" alt="${esc(c.name)}概念细节 · AI 演绎" loading="lazy" decoding="async"></div><figcaption><span>${esc(c.id)}</span><span>${esc(c.tags[0])} / AI 演绎</span></figcaption></figure>`).join('')}</div>
+   <div class="story-contact-sheet">${contact.map((c,i)=>`<figure><button class="story-contact-image" data-story-card="${esc(c.id)}" aria-label="阅读${esc(c.name)}详情"><img src="${esc(c.imagePath)}" alt="${esc(c.name)}概念细节 · AI 演绎" loading="lazy" decoding="async"><span class="story-hover-label"><span class="story-hover-name">${esc(c.name)}</span><small>${esc(c.id)} · 阅读档案 ${arrow}</small></span></button><figcaption><span>${esc(c.id)}</span><span>${esc(c.tags[0])} / AI 演绎</span></figcaption></figure>`).join('')}</div>
   </section>
   <section class="story-records story-section" id="story-records" aria-labelledby="story-records-title">
    <div class="story-section-heading"><h2 id="story-records-title">遗存档案</h2><p>${String(selected.length).padStart(2,'0')} 份示范 / 点击图像阅读解读</p></div>
-   <div class="story-timeline"><div class="story-axis" aria-hidden="true"><span></span></div>${selected.map((c,i)=>`<article class="story-record" data-story-record="${esc(c.id)}"><div class="story-record-marker"><span>${esc(c.id)}</span><i aria-hidden="true"></i></div><button class="story-record-image" data-story-card="${esc(c.id)}" aria-label="阅读${esc(c.name)}详情"><span class="story-record-reveal"><img src="${esc(c.imagePath)}" alt="${esc(c.name)} · AI 演绎" loading="lazy" decoding="async"></span><span class="story-image-action">阅读档案 ${arrow}</span></button><div class="story-record-copy"><p>${esc(c.tags.join(' / '))}</p><h3><button data-story-card="${esc(c.id)}">${esc(c.name)} ${arrow}</button></h3><p>${esc(c.summary)}</p><span class="story-note">AI 概念演绎 / 非实物照片</span></div></article>`).join('')}</div>
+   <div class="story-timeline"><div class="story-axis" aria-hidden="true"><span></span></div>${selected.map((c,i)=>`<article class="story-record" data-story-record="${esc(c.id)}"><div class="story-record-marker"><span>${esc(c.id)}</span><i aria-hidden="true"></i></div><button class="story-record-image" data-story-card="${esc(c.id)}" aria-label="阅读${esc(c.name)}详情"><span class="story-record-reveal"><img src="${esc(c.imagePath)}" alt="${esc(c.name)} · AI 演绎" loading="lazy" decoding="async"></span><span class="story-hover-label" aria-hidden="true"><span class="story-hover-name">${esc(c.name)}</span><small>${esc(c.id)} · 阅读档案 ${arrow}</small></span></button><div class="story-record-copy"><p>${esc(c.tags.join(' / '))}</p><h3><button data-story-card="${esc(c.id)}">${esc(c.name)} ${arrow}</button></h3><p>${esc(c.summary)}</p><span class="story-note">AI 概念演绎 / 非实物照片</span></div></article>`).join('')}</div>
   </section>
   <section class="story-material story-section" id="story-material" aria-labelledby="story-material-title">
    <div class="story-material-heading"><h2 id="story-material-title">${copy.materialTitle.map(esc).join('<br>')}</h2><p>${esc(copy.materialText)}</p></div>
@@ -39,10 +39,31 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
  const heroSection=page.querySelector('.story-hero'),records=[...page.querySelectorAll('.story-record')],timeline=page.querySelector('.story-timeline'),stack=page.querySelector('.story-stack'),layers=[...page.querySelectorAll('.story-stack-layer')];
  const menu=page.querySelector('.story-menu'),menuToggle=page.querySelector('.story-menu-toggle');
  layers.forEach((layer,index)=>{layer.style.zIndex=String(layers.length-index)});
- let frame=0,active='',opener=null;
+ let frame=0,active='',opener=null,measuredWidth=0;
+ const revealTargets=[...page.querySelectorAll('.story-intro h2,.story-intro-copy p,.story-section-heading h2,.story-section-heading p,.story-record-copy>p,.story-record-copy h3 button,.story-material-heading h2,.story-material-heading>p,.story-outro>p')];
+ const originalText=new Map(revealTargets.map(el=>[el,[...el.childNodes].map(n=>n.cloneNode(true))]));
+ const textVisibility=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){entry.target.classList.add('text-is-visible');textVisibility.unobserve(entry.target)}},{root:page,threshold:.12});
+ function prepareText(){
+  measuredWidth=page.clientWidth;
+  for(const el of revealTargets){
+   textVisibility.unobserve(el);el.replaceChildren(...originalText.get(el).map(n=>n.cloneNode(true)));
+   el.classList.add('story-text-reveal');el.classList.remove('text-is-visible');
+   if(reduced.matches){el.classList.add('text-is-visible');continue}
+   const icons=[...el.children].filter(n=>n.tagName.toLowerCase()==='svg');icons.forEach(n=>n.remove());
+   const text=[...el.childNodes].map(n=>n.nodeName==='BR'?'\n':n.textContent).join('');
+   el.replaceChildren();
+   const chars=Array.from(text).map(char=>{const node=document.createElement(char==='\n'?'br':'span');if(char!=='\n')node.textContent=char;el.append(node);return {node,char}});
+   const lines=[];let lastTop=null;
+   for(const {node,char} of chars){if(char==='\n'){lastTop=null;lines.push('');continue}const y=node.getBoundingClientRect().top;if(lastTop===null||Math.abs(y-lastTop)>3){if(!lines.length||lines.at(-1)!=='')lines.push('');lastTop=y}lines[lines.length-1]+=char}
+   el.replaceChildren();
+   for(const [i,line] of lines.filter(l=>l.trim()).entries()){const mask=document.createElement('span'),inner=document.createElement('span');mask.className='story-line-mask';inner.className='story-line-text';inner.textContent=line;inner.style.setProperty('--line-delay',`${Math.min(i*65,325)}ms`);mask.append(inner);el.append(mask)}
+   el.append(...icons);textVisibility.observe(el);
+  }
+ }
  const clamp=(v,min=0,max=1)=>Math.max(min,Math.min(max,v));
  function update(){
   frame=0;if(page.hidden)return;
+  if(measuredWidth!==page.clientWidth)prepareText();
   const h=page.clientHeight,top=page.scrollTop,heroProgress=clamp(top/Math.max(1,heroSection.offsetHeight-h));
   page.style.setProperty('--read-progress',top/Math.max(1,page.scrollHeight-h));
   page.classList.toggle('story-scrolled',top>h*.65);
@@ -81,7 +102,7 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
  return {
   get element(){return page},
   get isOpen(){return !page.hidden},
-  open(){opener=document.activeElement;page.hidden=false;document.body.classList.add('tools-reading');document.querySelector('.museum-header').inert=true;document.querySelector('#main').inert=true;page.scrollTop=0;page.focus({preventScroll:true});update();emit('category-enter',{categoryId:copy.id,presentation:'editorial-scroll'})},
-  close(){page.hidden=true;toggleMenu(false);document.body.classList.remove('tools-reading');document.querySelector('.museum-header').inert=false;document.querySelector('#main').inert=false;if(frame)cancelAnimationFrame(frame);frame=0;if(opener?.isConnected)opener.focus({preventScroll:true})}
+  open(){opener=document.activeElement;page.hidden=false;document.body.classList.add('tools-reading');document.querySelector('.museum-header').inert=true;document.querySelector('#main').inert=true;page.scrollTop=0;measuredWidth=0;page.focus({preventScroll:true});update();emit('category-enter',{categoryId:copy.id,presentation:'editorial-scroll'})},
+  close(){page.hidden=true;textVisibility.disconnect();toggleMenu(false);document.body.classList.remove('tools-reading');document.querySelector('.museum-header').inert=false;document.querySelector('#main').inert=false;if(frame)cancelAnimationFrame(frame);frame=0;if(opener?.isConnected)opener.focus({preventScroll:true})}
  };
 }
