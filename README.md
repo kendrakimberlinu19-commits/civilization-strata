@@ -32,3 +32,7 @@
 仓库根目录保存可编辑源码，`docs/` 保存线上版本。更新后运行 `npm run build`，将 `dist/` 内容更新至 `docs/`，提交并推送。Pages 从 main 分支的 `/docs` 发布。资源使用相对路径，档案使用 hash 路由。
 
 没有账号、数据库或上传后台。用户提供的素材未在此另行授予第三方再利用许可。
+
+## 右下角主题轮盘
+
+轮盘的四个主题按钮、中心名称、编号和进度均为可编辑网页元素；石质底纹为独立透明贴图 `assets/images/navigation-stone-dial.webp`，路径和 AI 来源在 `data/exhibit.js` 的 `navigationDial` 配置。生成提示词见 `assets/navigation-dial-source.md`。点击主题或左右箭头切换，键盘可用 Tab 和 Enter；不需要依赖悬停。

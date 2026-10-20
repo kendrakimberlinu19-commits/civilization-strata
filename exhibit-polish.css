@@ -211,3 +211,46 @@ dialog[open] { animation: expand 220ms var(--ease-response); }
  .exhibit-bottom .theme-progress button { font-size:11px; padding-top:12px; }
  .exhibit-bottom .switch-controls { position:absolute; right:0; bottom:52px; }
 }
+
+/* Stone-backed circular index; the texture is decorative, all controls stay HTML. */
+.exhibit-bottom.archive-dial { width:240px; height:240px; left:auto; right:24px; bottom:20px;
+ transform:none; display:block; pointer-events:none; isolation:isolate; }
+.dial-texture { position:absolute; inset:0; width:100%; height:100%; object-fit:contain;
+ pointer-events:none; z-index:-2; filter:drop-shadow(0 7px 12px #0008); }
+.archive-dial:before { content:''; position:absolute; inset:29%; border-radius:50%;
+ background:radial-gradient(circle,#080a09eb 20%,#080a09c9 65%,transparent 72%); z-index:-1; }
+.archive-dial .theme-progress { position:absolute; inset:0; display:block; width:100%; height:100%; pointer-events:none; }
+.dial-orbit { position:absolute; inset:0; width:100%; height:100%; overflow:visible; pointer-events:none; transform:rotate(-90deg); }
+.dial-orbit circle { fill:none; stroke-width:1; }
+.dial-track { stroke:#bca47733; }
+.dial-progress { stroke:#d9b57d; stroke-dasharray:100; stroke-dashoffset:calc(100 - var(--theme-progress)*100); transition:stroke-dashoffset 180ms linear; }
+.archive-dial .theme-progress button { position:absolute; width:72px; height:48px; min-height:44px;
+ left:50%; top:13%; padding:3px 0; transform:translate(-50%,-50%); border:0; background:#0b0c0ba6;
+ border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+ gap:2px; color:#c4bfb3; pointer-events:auto; white-space:nowrap; letter-spacing:0; }
+.archive-dial .theme-progress button:nth-of-type(2) { left:87%; top:50%; }
+.archive-dial .theme-progress button:nth-of-type(3) { left:50%; top:87%; }
+.archive-dial .theme-progress button:nth-of-type(4) { left:13%; top:50%; }
+.archive-dial .theme-progress button b { font:400 16px/1 Georgia,serif; font-variant-numeric:tabular-nums; }
+.archive-dial .theme-progress button>span { display:block; margin:0; font:400 10.5px/1.4 var(--font-reading); }
+.archive-dial .theme-progress button[aria-current] { color:#efcf97; background:#1c1811e6; }
+.archive-dial .theme-progress button:hover { background:#242017ed; }
+.dial-centre { position:absolute; left:50%; top:44%; transform:translate(-50%,-50%); width:108px;
+ display:flex; flex-direction:column; align-items:center; gap:5px; text-align:center; color:#eee5d5; }
+.dial-kicker { font:400 10px/1.4 var(--font-reading); color:#b4aa98; letter-spacing:.12em; }
+#dial-theme { font:400 15px/1.4 var(--font-display); white-space:nowrap; }
+.dial-centre #theme-fraction { font:400 11px/1.5 Georgia,serif; color:#cfb78b; font-variant-numeric:tabular-nums; }
+.archive-dial .switch-controls { position:absolute; top:57%; bottom:auto; right:auto; left:50%; transform:translateX(-50%);
+ display:flex; gap:0; width:88px; height:44px; pointer-events:auto; }
+.archive-dial .switch-controls button { width:44px; height:44px; padding:14px; }
+@media(max-width:700px) {
+ .exhibit-bottom.archive-dial { width:208px; height:208px; right:12px; bottom:10px; }
+ .archive-dial .theme-progress button { width:64px; height:44px; padding:2px 0; }
+ .archive-dial .theme-progress button>span { font-size:10px; }
+ #dial-theme { font-size:13px; }
+ .dial-centre { width:95px; gap:3px; top:43%; }
+ .dial-kicker { font-size:9px; }
+ .archive-dial .switch-controls { top:54%; }
+ .active-caption { left:24%; top:auto; bottom:38px; }
+}
+@media(prefers-reduced-motion:reduce) { .dial-progress { transition:none; } }

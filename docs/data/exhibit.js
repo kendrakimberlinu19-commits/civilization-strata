@@ -11,4 +11,9 @@ export const exhibit={
   aiLabel:'概念示范图 / AI 处理',
  })),
  backImage:'assets/images/stone-sleeve-back.webp',
+ navigationDial:{
+  imagePath:'assets/images/navigation-stone-dial.webp',
+  source:'ChatGPT 内置 Image 模型，本轮生成的石质地层轮盘装饰贴图',
+  aiLabel:'AI 概念贴图 · 非真实文物',
+ },
 };
