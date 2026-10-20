@@ -11,7 +11,7 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
  const motion=createDeckPhysics({count:categories.length,position:0}),dust=createStoneDust(deck,reduced);
  const bound=n=>Math.max(0,Math.min(categories.length-1,n));
  let frame=0,last=0,spacing=0,drag=null,suppressed=0,current=-1;
- function measure(){spacing=folders[0].offsetWidth*1.19;}
+ function measure(){spacing=Math.min(folders[0].offsetWidth*1.19,container.clientWidth*.5);}
  const tilts=new Map(folders.map(f=>[f,{x:0,y:0,targetX:0,targetY:0}]));
  let tiltFrame=0,tiltTime=0;
  function tiltTick(time){
