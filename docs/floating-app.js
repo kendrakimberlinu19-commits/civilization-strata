@@ -1,5 +1,5 @@
 import {categories,cards,featureVideo} from './data/archive.js';
-import {createFloatingDeck} from './floating-deck.js?v=20261020-diagonal';
+import {createFloatingDeck} from './floating-deck.js?v=20261020-arc';
 import {createAmbientSound} from './ambient-sound.js';
 import {createThemeStory} from './tools-story.js';
 import {themeStories} from './data/theme-stories.js';

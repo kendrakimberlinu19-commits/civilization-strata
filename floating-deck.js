@@ -31,7 +31,15 @@ export function createFloatingDeck({container,categories,esc,onChange,onEnter,em
   const p=motion.position,index=Math.round(bound(p));deck.dataset.motion=motion.mode;deck.dataset.velocity=motion.velocity.toFixed(3);deck.style.setProperty('--deck-position',p);
   for(let i=0;i<folders.length;i++){
    const f=folders[i],d=i-p,a=Math.abs(d),opacity=Math.max(.25,1-a*.16);
-   f.style.setProperty('--slide-x',`${d*spacing}px`);f.style.setProperty('--slide-y',`${-d*spacing*slope}px`);f.style.setProperty('--base-roll',`${-18-Math.max(-1,Math.min(1,d))*3}deg`);f.style.setProperty('--base-yaw',`${-16+Math.max(-1,Math.min(1,d))*2}deg`);f.style.setProperty('--scale',Math.max(.7,1+d*.055-a*.025));f.style.opacity=opacity;
+   // A continuous bowed track: every object follows its position and tangent,
+   // including the fractions between themes. Extend the ends without folding back.
+   const u=Math.max(-1.6,Math.min(1.6,d)),theta=u*.62,tail=d-u;
+   const x=spacing*(Math.sin(theta)/.62+tail*Math.cos(theta));
+   const bow=spacing*.65*((1-Math.cos(theta))/.62+tail*Math.sin(theta));
+   const y=-slope*x+bow;
+   const tangent=Math.atan(-slope+.65*Math.tan(theta))*180/Math.PI;
+   const roll=Math.max(-46,Math.min(22,tangent+3));
+   f.style.setProperty('--slide-x',`${x}px`);f.style.setProperty('--slide-y',`${y}px`);f.style.setProperty('--base-roll',`${roll}deg`);f.style.setProperty('--base-yaw',`${-16+Math.sin(theta)*12}deg`);f.style.setProperty('--scale',Math.max(.7,1+d*.055-a*.025));f.style.opacity=opacity;
    f.style.zIndex=String(10-Math.round(a*3));f.style.pointerEvents=opacity<.1?'none':'auto';f.inert=opacity<.1||a>1.7;f.classList.toggle('is-current',i===index);
   }
   const info=document.querySelector('.exhibit-info');
