@@ -49,6 +49,25 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 .switch-controls button, .sound-toggle, .open-active, .all-archives, .video-trigger { transition: transform 140ms var(--ease-response), color 160ms ease; }
 .switch-controls button:not(:disabled):active, .sound-toggle:active, .open-active:active, .all-archives:active, .video-trigger:active { transform: scale(.96); }
 .hover-rings { transition: opacity 160ms ease; }
+
+/* A sliding photograph sits behind the fixed, irregular stone pocket lip.
+   Coordinates follow the approved sleeve image, rather than a generic rectangle. */
+.archive-photo { position:absolute; left:25.3%; top:14.1%; width:63.5%; height:36%;
+  display:block; background:#b4a38a; padding:1px 2px 2px;
+  clip-path:polygon(0 0,100% 5.4%,100% 100%,0 100%);
+  transform:translate3d(0,0,0) rotate(-.15deg); transform-origin:50% 85%;
+  transition:transform 260ms cubic-bezier(.2,.8,.2,1),filter 200ms ease;
+  filter:brightness(.91); pointer-events:none; }
+.archive-photo>img { width:100%; height:100%; display:block; object-fit:cover;
+  object-position:50% 43%; filter:sepia(.12) saturate(.78); }
+.photo-edge { position:absolute; inset:0; box-shadow:inset 0 2px 1px #f1ddbd80,inset -3px 0 2px #18130f88; }
+.actor-front>.archive-pocket { position:absolute; inset:0;
+  clip-path:polygon(0 0,25.8% 0,25.8% 13.9%,36.7% 36.2%,95.3% 50%,100% 50%,100% 100%,0 100%);
+  pointer-events:none; }
+.actor-number,.actor-tab-number { z-index:1; }
+.archive-folder.is-hovered .archive-photo { transform:translate3d(.35%,-5.5%,0) rotate(.4deg); filter:brightness(1); }
+.is-dragging .archive-photo { transform:translate3d(0,0,0); transition-duration:160ms; }
+.archive-folder:focus-visible .archive-photo { transform:translate3d(.35%,-5.5%,0) rotate(.4deg); filter:brightness(1.05); transition:none; }
 dialog[open] { animation: expand 220ms var(--ease-response); }
 .dialog-close { top: 16px; margin: 16px 16px -60px 0; display: grid; place-items: center; }
 .dialog-close svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; }
@@ -122,4 +141,6 @@ dialog[open] { animation: expand 220ms var(--ease-response); }
 }
 @media (prefers-reduced-motion: reduce) {
   .hover-rings { transition: none; }
+  .archive-photo { transition:none; }
+  .archive-folder.is-hovered .archive-photo,.archive-folder:focus-visible .archive-photo { transform:none; }
 }
