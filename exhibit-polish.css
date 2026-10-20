@@ -144,3 +144,48 @@ dialog[open] { animation: expand 220ms var(--ease-response); }
   .archive-photo { transition:none; }
   .archive-folder.is-hovered .archive-photo,.archive-folder:focus-visible .archive-photo { transform:none; }
 }
+
+/* One diagonal collection, like the recorded reference: previous low-left,
+   following high-right. The metadata stays anchored while the objects travel. */
+.museum-header .brand { display:none; }
+.museum-header .main-navigation { grid-column:2; }
+.museum-header .sound-controls { grid-column:3; }
+.archive-deck { touch-action:none; }
+.drag-guide svg { transform:rotate(-21deg); }
+.archive-folder { left:55%; top:14svh; width:50svh; height:64svh; }
+.active-caption { left:55%; top:82svh; }
+.active-caption h1 { display:none; }
+.exhibit-info { top:24px; width:min(25%,320px); background:transparent; }
+.info-theme-heading { margin:0 0 18px; font:400 clamp(32px,3.6vw,56px)/1.02 var(--font-display); letter-spacing:-.025em; }
+.info-title-line { display:block; overflow:hidden; }
+.info-title-line>span { display:block; transition:transform 280ms cubic-bezier(.16,1,.3,1),opacity 180ms ease; }
+.info-title-line:nth-child(2)>span { transition-delay:35ms; }
+.exhibit-info dl div { padding:6px 0; font-size:12px; line-height:1.45; overflow:hidden;
+  transition:clip-path 230ms cubic-bezier(.16,1,.3,1),opacity 170ms ease; clip-path:inset(0 0 0 0); }
+.exhibit-info dl div:nth-child(2) { transition-delay:35ms; }
+.exhibit-info dl div:nth-child(3) { transition-delay:65ms; }
+.exhibit-info>p { font-size:11px; margin-top:10px; transition:opacity 160ms ease; }
+.exhibit-info.is-travelling .info-title-line>span { transform:translateY(-108%); opacity:0; transition-duration:150ms; transition-delay:0ms; }
+.exhibit-info.is-travelling dl div { clip-path:inset(0 0 100% 0); opacity:0; transition-duration:140ms; transition-delay:0ms; }
+.exhibit-info.is-travelling>p { opacity:0; }
+@media(max-width:1100px) and (min-width:701px) {
+ .archive-folder { left:57%; width:48svh; height:62svh; top:18svh; }
+ .active-caption { left:57%; top:84svh; }
+ .exhibit-info { top:24px; width:26%; }
+ .info-theme-heading { font-size:38px; }
+}
+@media(max-width:700px) {
+ .museum-header .main-navigation { position:absolute;right:20px;top:74px;display:flex;flex-direction:column;align-items:flex-end;gap:0;margin:0; }
+ .museum-header .main-navigation button { min-height:36px; padding:5px 8px; }
+ .museum-header .sound-controls { grid-column:2; }
+ .exhibit-info { top:20px; width:52%; }
+ .info-theme-heading { font-size:32px; margin-bottom:12px; }
+ .exhibit-info dl div { font-size:11px; padding:4px 0; }
+ .exhibit-info>p { font-size:10px; }
+ .archive-folder { left:54%; top:35svh; width:min(44svh,70vw); height:43svh; }
+ .active-caption { left:54%; top:81svh; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .info-title-line>span,.exhibit-info dl div,.exhibit-info>p { transition:none; }
+ .exhibit-info.is-travelling .info-title-line>span { transform:none; }
+}
