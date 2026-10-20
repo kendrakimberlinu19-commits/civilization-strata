@@ -2,7 +2,7 @@ import {categories,cards,featureVideo} from './data/archive.js';
 import {exhibit} from './data/exhibit.js?v=20261020-dial';
 import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
 import {createAmbientSound} from './ambient-sound.js';
-import {createGestureControl} from './gesture-control.js?v=20261020-gestures';
+import {createGestureControl} from './gesture-control.js?v=20261020-gesture-scroll';
 import {createThemeStory} from './tools-story.js?v=20261020-photo-reveal';
 import {themeStories} from './data/theme-stories.js';
 import {createArchiveEntry} from './archive-entry.js?v=20261020-photo-reveal';
@@ -50,6 +50,11 @@ window.addEventListener('popstate',applyRoute);applyRoute();
 gestureControl=createGestureControl({context:()=>archiveEntry.running?'busy':dialogs.some(d=>d.open)?'dialog':currentPage?.isOpen?'story':'deck',onAction:action=>{
  if(archiveEntry.running)return;
  if(action==='back'){const top=modalOrder.at(-1);if(top)top.close();else if(currentPage?.isOpen)closeTheme();return}
+ if(action==='scroll-down'||action==='scroll-up'){
+  const reader=modalOrder.at(-1)||(currentPage?.isOpen?currentPage.element:null);
+  if(reader)reader.scrollBy({top:(action==='scroll-down'?1:-1)*reader.clientHeight*.65,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  return;
+ }
  if(currentPage?.isOpen||dialogs.some(d=>d.open))return;
  if(action==='open')deck.open();else if(action==='next')deck.step(1);else if(action==='previous')deck.step(-1);
 }});

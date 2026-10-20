@@ -16,7 +16,7 @@ export function createGestureInterpreter(){
    if(!hand){clear();if(now-lastSeen>350)locked=false;return {label:'将一只手放入画面',progress:0}}
    lastSeen=now;
    if(hand.pinch>.55)locked=false;
-   if(now<cooldown){clear();return {label:'动作已完成 · 请松开手指',progress:0}}
+   if(now<cooldown){clear();return {label:'动作已完成 · 稍停后继续',progress:0}}
    if(context==='deck'&&hand.pinch<.32&&!locked){
     history=[];palmStart=null;pinchStart??=now;
     const progress=Math.min(1,(now-pinchStart)/450);
@@ -24,6 +24,13 @@ export function createGestureInterpreter(){
     return {label:'保持捏合 · 开启档案',progress};
    }
    pinchStart=null;
+   if((context==='story'||context==='dialog')&&hand.extended>=2&&hand.pinch>.55){
+    history.push({x:hand.x,y:hand.y,time:now});history=history.filter(p=>now-p.time<650);
+    const start=history[0],dy=hand.y-start.y,dx=hand.x-start.x;
+    if(now-start.time>=140&&Math.abs(dy)>.16&&Math.abs(dy)>Math.abs(dx)*1.5){
+     cooldown=now+800;clear();return {action:dy<0?'scroll-down':'scroll-up',label:dy<0?'向下阅读':'向上回看',progress:1};
+    }
+   }else if(context!=='deck')history=[];
    if(context!=='deck'&&context!=='busy'&&hand.open){
     if(!palmAnchor||distance(hand,palmAnchor)>.07){palmAnchor=hand;palmStart=now}
     palmStart??=now;const progress=Math.min(1,(now-palmStart)/1400);
@@ -37,7 +44,7 @@ export function createGestureInterpreter(){
     if(now-start.time>=140&&Math.abs(dx)>.20&&Math.abs(hand.y-start.y)<.16){
      cooldown=now+1100;clear();return {action:dx<0?'next':'previous',label:dx<0?'下一份档案':'上一份档案',progress:1};
     }
-   }else history=[];
-   return {label:context==='deck'?'左右挥手切换 · 捏合开启':context==='busy'?'正在进入档案…':'张开手掌停留可返回',progress:0};
+   }else if(context==='deck')history=[];
+   return {label:context==='deck'?'左右挥手切换 · 捏合开启':context==='busy'?'正在进入档案…':'上下挥手阅读 · 手掌停留返回',progress:0};
   }};
 }

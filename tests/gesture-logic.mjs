@@ -15,4 +15,13 @@ g=ready('story');g.update(hand(),800,'story');g.update(hand(.7),1800,'story');as
 g=ready('story');assert.equal(g.update(hand(.8),950,'story').action,undefined,'swiping cannot switch while reading');
 g=ready('busy');assert.equal(g.update(hand(.5,{pinch:.2}),3000,'busy').action,undefined);
 g=ready();g.update(hand(.5,{pinch:.2}),800);assert.equal(g.update(hand(.5,{pinch:.2}),1300,'story').action,undefined,'route changes cancel pending action');
-console.log('PASS: mirrored swipes, pinch hold/release, return hold, cooldown, tracking loss and reading/transition guards.');
+g=ready('story');assert.equal(g.update(hand(.5,{y:.28}),900,'story').action,'scroll-down','upward hand movement reads down like touch');
+assert.equal(g.update(hand(.5,{y:.75}),1000,'story').action,undefined,'scroll cooldown blocks reverse noise');
+g=ready('story');assert.equal(g.update(hand(.5,{y:.72}),900,'story').action,'scroll-up');
+g=ready('dialog');assert.equal(g.update(hand(.5,{y:.28}),900,'dialog').action,'scroll-down');
+g=ready();assert.equal(g.update(hand(.5,{y:.28}),900).action,undefined,'vertical swipe cannot scroll the deck');
+g=ready('story');assert.equal(g.update(hand(.8,{y:.68}),900,'story').action,undefined,'diagonal movement is not a vertical swipe');
+g=ready('story');g.update(hand(.5,{y:.42}),900,'story');g.update(null,1000,'story');assert.equal(g.update(hand(.5,{y:.2}),1100,'story').action,undefined,'lost tracking resets vertical origin');
+g=ready('story');for(let t=800;t<2100;t+=100)assert.equal(g.update(hand(),t,'story').action,undefined);assert.equal(g.update(hand(),2100,'story').action,'back','stationary open palm still returns');
+g=ready('story');g.update(hand(.5,{y:.28}),900,'story');for(let t=1000;t<2500;t+=100)assert.notEqual(g.update(hand(.5,{y:.28}),t,'story').action,'back','scroll and return cannot fire together');
+console.log('PASS: mirrored/vertical swipes, scroll cooldown, directional guards, pinch hold/release, return hold, tracking loss and transition guards.');
