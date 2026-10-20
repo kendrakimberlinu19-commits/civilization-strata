@@ -21,7 +21,13 @@ g=ready('story');assert.equal(g.update(hand(.5,{y:.72}),900,'story').action,'scr
 g=ready('dialog');assert.equal(g.update(hand(.5,{y:.28}),900,'dialog').action,'scroll-down');
 g=ready();assert.equal(g.update(hand(.5,{y:.28}),900).action,undefined,'vertical swipe cannot scroll the deck');
 g=ready('story');assert.equal(g.update(hand(.8,{y:.68}),900,'story').action,undefined,'diagonal movement is not a vertical swipe');
-g=ready('story');g.update(hand(.5,{y:.42}),900,'story');g.update(null,1000,'story');assert.equal(g.update(hand(.5,{y:.2}),1100,'story').action,undefined,'lost tracking resets vertical origin');
+g=ready('story');g.update(hand(.5,{y:.47}),800,'story');g.update(null,1100,'story');assert.equal(g.update(hand(.5,{y:.2}),1200,'story').action,undefined,'long tracking loss resets vertical origin');
 g=ready('story');for(let t=800;t<2100;t+=100)assert.equal(g.update(hand(),t,'story').action,undefined);assert.equal(g.update(hand(),2100,'story').action,'back','stationary open palm still returns');
-g=ready('story');g.update(hand(.5,{y:.28}),900,'story');for(let t=1000;t<2500;t+=100)assert.notEqual(g.update(hand(.5,{y:.28}),t,'story').action,'back','scroll and return cannot fire together');
+g=ready('story');g.update(hand(.5,{y:.28}),900,'story');for(let t=1000;t<2700;t+=100)assert.notEqual(g.update(hand(.5,{y:.28}),t,'story').action,'back','scroll and return cannot fire together');
+g=ready('story');assert.equal(g.update(hand(.5,{y:.42,extended:1,pinch:.45}),800,'story').action,'scroll-down','small relaxed one-finger stroke works');
+g=ready('story');g.update(hand(.5,{y:.47}),900,'story');assert.equal(g.update(hand(.5,{y:.42}),1500,'story').action,'scroll-down','slow small stroke accumulates');
+g=ready('story');g.update(hand(.5,{y:.46}),800,'story');g.update(null,850,'story');assert.equal(g.update(hand(.5,{y:.42}),900,'story').action,'scroll-down','brief detection dropout does not discard a stroke');
+g=ready('story');for(let t=800;t<2000;t+=100)assert.equal(g.update(hand(.5,{y:.5+(t%300===0?.008:-.008),open:false}),t,'story').action,undefined,'stationary jitter cannot scroll');
+g=ready('story');assert.equal(g.update(hand(.5,{y:.45,scale:.1}),800,'story').action,'scroll-down','small distant hand uses palm-relative threshold');
+g=ready('story');assert.equal(g.update(hand(.5,{y:.42}),800,'story').action,'scroll-down');g.update(hand(.5,{y:.42}),1300,'story');assert.equal(g.update(hand(.5,{y:.5}),1400,'story').action,'scroll-up','next intentional stroke available after short cooldown');
 console.log('PASS: mirrored/vertical swipes, scroll cooldown, directional guards, pinch hold/release, return hold, tracking loss and transition guards.');

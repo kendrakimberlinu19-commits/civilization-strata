@@ -2,7 +2,7 @@ import {categories,cards,featureVideo} from './data/archive.js';
 import {exhibit} from './data/exhibit.js?v=20261020-dial';
 import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
 import {createAmbientSound} from './ambient-sound.js';
-import {createGestureControl} from './gesture-control.js?v=20261020-gesture-scroll';
+import {createGestureControl} from './gesture-control.js?v=20261020-gesture-responsive';
 import {createThemeStory} from './tools-story.js?v=20261020-photo-reveal';
 import {themeStories} from './data/theme-stories.js';
 import {createArchiveEntry} from './archive-entry.js?v=20261020-photo-reveal';
