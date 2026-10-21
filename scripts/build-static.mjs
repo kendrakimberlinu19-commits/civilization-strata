@@ -3,7 +3,7 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const out=path.join(root,'dist');
-const runtime=['index.html','styles.css','floating-exhibit.css','exhibit-polish.css','tools-story.css','archive-entry.css','gesture-control.css','gesture-control.js','gesture-logic.js','floating-app.js','floating-deck.js','deck-physics.js','stone-dust.js','ambient-sound.js','tools-story.js','archive-entry.js','data/archive.js','data/exhibit.js','data/theme-stories.js'];
+const runtime=['landing-entry.js','landing-entry.css','index.html','styles.css','floating-exhibit.css','exhibit-polish.css','tools-story.css','archive-entry.css','gesture-control.css','gesture-control.js','gesture-logic.js','floating-app.js','floating-deck.js','deck-physics.js','stone-dust.js','ambient-sound.js','tools-story.js','archive-entry.js','data/archive.js','data/exhibit.js','data/theme-stories.js'];
 await mkdir(out,{recursive:true});
 async function copy(relative){await mkdir(path.dirname(path.join(out,relative)),{recursive:true});await copyFile(path.join(root,relative),path.join(out,relative));}
 for(const file of runtime)await copy(file);
