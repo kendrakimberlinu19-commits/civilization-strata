@@ -1,0 +1,72 @@
+/* Local, renamed OFL subsets of Adobe Source Han Serif / Sans. */
+@font-face {
+ font-family:'Strata Exhibition Serif';src:url('assets/fonts/strata-serif-vf.woff2') format('woff2');
+ font-style:normal;font-weight:200 900;font-display:swap;
+}
+@font-face {
+ font-family:'Strata Exhibition Sans';src:url('assets/fonts/strata-sans-vf.woff2') format('woff2');
+ font-style:normal;font-weight:100 900;font-display:swap;
+}
+:root {
+ --font-display:'Strata Exhibition Serif','Songti SC','SimSun',serif;
+ --font-reading:'Strata Exhibition Sans','Microsoft YaHei','PingFang SC',sans-serif;
+ --font-index:Georgia,'Times New Roman',serif;
+ --type-body:1.0625rem;
+ --type-note:.8125rem;
+ --type-title:clamp(1.875rem,2.6vw,2.625rem);
+}
+body {font-family:var(--font-reading);font-synthesis:none;letter-spacing:0;line-break:strict}
+button,input,select,textarea {font-family:var(--font-reading)}
+.brand strong,.landing-wordmark {font-family:var(--font-display);font-weight:600;letter-spacing:.025em}
+.landing-copy h1 {font-weight:600;line-height:1.18;letter-spacing:.025em}
+.landing-copy h1>span {font-weight:500;letter-spacing:.055em;line-height:1.35}
+.landing-introduction {font-size:17px;line-height:1.85;letter-spacing:0;max-width:27em;color:#cdc6b8}
+.landing-kicker {font-size:13px;letter-spacing:.08em}
+.landing-enter,.main-navigation button {font-weight:500;letter-spacing:.02em}
+.landing-count,.landing-footer {font-size:12px;letter-spacing:.025em}
+.info-theme-heading {font-weight:600;line-height:1.16;letter-spacing:.015em}
+.exhibit-info dl div {font-size:13px;line-height:1.65}
+.exhibit-info>p {font-size:11px;letter-spacing:.035em}
+.info-title-line {padding-bottom:.08em;margin-bottom:-.08em}
+.story-hero h1 {font-weight:500;letter-spacing:-.015em;line-height:1.05}
+.story-intro h2,.story-section-heading h2,.story-record-copy h3,
+.story-material-heading h2,.story-film h2 {font-weight:500;letter-spacing:.015em;line-height:1.35}
+.story-intro-copy p,.story-record-copy>p,.story-material-heading>p,.story-film>p:not(.eyebrow) {
+ font-size:var(--type-body);font-weight:400;line-height:1.85;letter-spacing:0;color:#cdc6b8;
+}
+.tools-story .story-note {font-size:13px;line-height:1.85;color:#b6ae9f}
+.story-record-copy>p:first-child {font-size:13px;font-weight:500;color:#ccb085}
+.story-top,.story-hero-nav {font-size:14px;letter-spacing:.015em}
+.story-hero-nav>span {font-size:11px}
+dialog .detail-layout h2,dialog .project-copy h2,dialog .video-content h2,
+dialog .archive-directory h2 {font-family:var(--font-display);font-weight:600;letter-spacing:.025em;line-height:1.4}
+dialog .detail-summary,dialog .interpretation p,dialog .project-copy p {
+ font:400 var(--type-body)/1.85 var(--font-reading);letter-spacing:0;max-width:34em;color:#443425;
+}
+dialog .interpretation h3,dialog .project-copy h3 {font-family:var(--font-display);font-weight:600;letter-spacing:.025em}
+dialog .tags span {font-size:12px;letter-spacing:0;line-height:1.5}
+dialog .detail-basic,dialog .detail-layout figcaption {font:400 13px/1.85 var(--font-reading);letter-spacing:0}
+dialog .source {font-size:13px;line-height:1.85}
+dialog .archive-card .card-copy h3 {font-family:var(--font-display);font-weight:500;letter-spacing:.015em}
+dialog .archive-card .card-copy>p:not(.card-id) {font-size:15px;line-height:1.8}
+.actor-number,.actor-tab-number,.card-id,.story-record-marker,#theme-fraction,
+.archive-dial .theme-progress button b {font-family:var(--font-index);font-variant-numeric:lining-nums tabular-nums}
+.archive-dial .theme-progress button>span {font-weight:500}
+@media(max-width:700px) {
+ :root {--type-body:1rem;--type-title:1.875rem}
+ .landing-copy h1 {font-size:54px;letter-spacing:.02em}
+ .landing-introduction {font-size:16px;line-height:1.85}
+ .landing-count,.landing-footer {font-size:11px}
+ .info-theme-heading {font-size:32px;line-height:1.18}
+ .exhibit-info dl div {font-size:11px;line-height:1.65}
+ .main-navigation button {font-size:13px}
+ .story-top {font-size:12px}
+ .story-hero-nav {font-size:13px}
+ .story-hero-nav>span {font-size:10px}
+ .story-intro h2,.story-material-heading h2 {line-height:1.4}
+ dialog .detail-summary,dialog .interpretation p,dialog .project-copy p {font-size:16px}
+ input,select,textarea {font-size:16px}
+}
+
+.story-record-copy h3 {font-size:clamp(1.5rem,2.35vw,2.5rem)}
+.story-record-copy h3 button {text-wrap:balance}

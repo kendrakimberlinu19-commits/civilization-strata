@@ -20,7 +20,7 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
    </div>
   </section>
   <section class="story-intro story-section" id="story-intro" aria-labelledby="story-intro-title">
-   <h2 id="story-intro-title">${esc(copy.subtitle)}</h2>
+   <h2 id="story-intro-title">${esc(copy.subtitle).replace('，','，<br>')}</h2>
    <div class="story-intro-copy"><p>${esc(copy.introduction)}</p><p class="story-note">${esc(copy.note)}</p></div>
    <div class="story-contact-sheet">${contact.map((c,i)=>`<figure><button class="story-contact-image" data-story-card="${esc(c.id)}" aria-label="阅读${esc(c.name)}详情"><img src="${esc(c.imagePath)}" alt="${esc(c.name)}" loading="lazy" decoding="async"><span class="story-hover-label"><span class="story-hover-name">${esc(c.name)}</span><small>${esc(c.id)} · 阅读档案 ${arrow}</small></span></button><figcaption><span>${esc(c.id)}</span><span>${esc(c.tags[0])}</span></figcaption></figure>`).join('')}</div>
   </section>
@@ -29,7 +29,7 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
    <div class="story-timeline"><div class="story-axis" aria-hidden="true"><span></span></div>${selected.map((c,i)=>`<article class="story-record" data-story-record="${esc(c.id)}"><div class="story-record-marker"><span>${esc(c.id)}</span><i aria-hidden="true"></i></div><button class="story-record-image" data-story-card="${esc(c.id)}" aria-label="阅读${esc(c.name)}详情"><span class="story-record-reveal"><img src="${esc(c.imagePath)}" alt="${esc(c.name)}" loading="lazy" decoding="async"></span><span class="story-hover-label" aria-hidden="true"><span class="story-hover-name">${esc(c.name)}</span><small>${esc(c.id)} · 阅读档案 ${arrow}</small></span></button><div class="story-record-copy"><p>${esc(c.tags.join(' / '))}</p><h3><button data-story-card="${esc(c.id)}">${esc(c.name)} ${arrow}</button></h3><p>${esc(c.summary)}</p><span class="story-note">${esc(c.basicInfo)}</span></div></article>`).join('')}</div>
   </section>
   <section class="story-material story-section" id="story-material" aria-labelledby="story-material-title">
-   <div class="story-material-heading"><h2 id="story-material-title">${copy.materialTitle.map(esc).join('<br>')}</h2><p>${esc(copy.materialText)}</p></div>
+   <div class="story-material-heading"><h2 id="story-material-title">${copy.materialTitle.map(t=>esc(t).replace('，','，<br>')).join('<br>')}</h2><p>${esc(copy.materialText)}</p></div>
    <div class="story-stack diagram-stack"><div class="story-stack-pin"><figure class="story-stack-layer"><img src="${esc(copy.diagramImage)}" alt="${esc(copy.name)}关系与方法图解" loading="lazy" decoding="async"><figcaption><span>关系与方法</span><span>图解辅助阅读 · 不按比例</span></figcaption></figure><div class="story-stack-label" aria-hidden="true">MATERIAL STUDIES <span>01 / 01</span></div></div></div>
   </section>
   <section class="story-film story-section" id="story-film"><p class="eyebrow">STRATUM ${esc(copy.number)} / FILM</p><h2>${esc(copy.videoTitle)}</h2><p>${esc(copy.description)}</p><video controls playsinline preload="none" poster="${esc(copy.heroImage)}" src="${esc(copy.videoPath)}" aria-label="${esc(copy.videoTitle)}"></video></section><section class="story-closing-image"><img src="${esc(copy.endingImage)}" alt="${esc(copy.name)}尾章" loading="lazy" decoding="async"></section><section class="story-outro story-section"><p>${esc(copy.closing)}</p><div class="story-outro-links"><button data-story-video>本层短片 <span>${esc(copy.videoTitle)}</span> ${arrow}</button><button data-story-next>下一地层 · ${esc(copy.nextName)} ${arrow}</button></div><footer><span>文明地层 · 资料与解读</span><button data-jump="story-entry">返回顶部 ↑</button></footer><div class="story-end-word" aria-hidden="true" style="background-image:url('${esc(copy.endingImage)}')">${copy.title.map(esc).join('')}</div></section>`.replace(/(id|aria-labelledby|aria-controls)="([^"]+)"/g,(_,attr,id)=>`${attr}="${copy.id}-${id}"`);
@@ -85,6 +85,8 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
   if(section!==active){active=section;emit('story-section',{categoryId:copy.id,section})}
  }
  function schedule(){if(!frame)frame=requestAnimationFrame(update)}
+ // Re-measure revealed lines once the local web fonts replace the fallback.
+ document.fonts.ready.then(()=>{if(!page.hidden){measuredWidth=0;schedule()}});
  page.addEventListener('play',e=>{if(e.target.tagName==='VIDEO')document.querySelectorAll('video').forEach(v=>{if(v!==e.target)v.pause()})},true);
  page.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);reduced.addEventListener('change',schedule);
  function toggleMenu(open){menu.hidden=!open;menuToggle.setAttribute('aria-expanded',String(open));menuToggle.querySelector('span').textContent=open?'−':'＋'}
