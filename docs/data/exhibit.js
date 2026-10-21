@@ -1,19 +1,58 @@
-// Independent display assets. Replace a theme's transparent image without changing UI.
-export const exhibit={
- sleeves:[
-  {categoryId:'tools',photoPath:'assets/images/content/tools-01.webp',photoName:'青铜冶炼遗存'},
-  {categoryId:'ritual',photoPath:'assets/images/content/ritual-hero.webp',photoName:'祭祀遗址'},
-  {categoryId:'cities',photoPath:'assets/images/content/cities-01.webp',photoName:'古城墙遗址'},
-  {categoryId:'arts',photoPath:'assets/images/content/arts-hero.webp',photoName:'壁画残片'},
- ].map(photo=>({
-  ...photo,imagePath:'assets/images/original-sleeve-cutout.webp',
-  source:'用户提供的石质档案袋原图；ChatGPT Image 透明背景处理',
-  aiLabel:'概念示范图 / AI 处理',
- })),
- backImage:'assets/images/stone-sleeve-back.webp',
- navigationDial:{
-  imagePath:'assets/images/navigation-stone-dial.webp',
-  source:'ChatGPT 内置 Image 模型，本轮生成的石质地层轮盘装饰贴图',
-  aiLabel:'AI 概念贴图 · 非真实文物',
- },
+export const exhibit = {
+  "sleeves": [
+    {
+      "categoryId": "tools",
+      "photoPath": "assets/images/layers/s01/hero.webp",
+      "photoName": "生计与土地",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    },
+    {
+      "categoryId": "ritual",
+      "photoPath": "assets/images/layers/s02/hero.webp",
+      "photoName": "定居与协作",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    },
+    {
+      "categoryId": "cities",
+      "photoPath": "assets/images/layers/s03/hero.webp",
+      "photoName": "文字与决策",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    },
+    {
+      "categoryId": "arts",
+      "photoPath": "assets/images/layers/s04/hero.webp",
+      "photoName": "材料与技艺",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    },
+    {
+      "categoryId": "belief",
+      "photoPath": "assets/images/layers/s05/hero.webp",
+      "photoName": "信仰与图像",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    },
+    {
+      "categoryId": "port",
+      "photoPath": "assets/images/layers/s06/hero.webp",
+      "photoName": "港口与相遇",
+      "imagePath": "assets/images/original-sleeve-cutout.webp",
+      "source": "用户提供的石质档案袋原图；透明背景处理",
+      "aiLabel": ""
+    }
+  ],
+  "backImage": "assets/images/stone-sleeve-back.webp",
+  "navigationDial": {
+    "imagePath": "assets/images/navigation-stone-dial.webp",
+    "source": "地层轮盘装饰贴图",
+    "aiLabel": ""
+  }
 };

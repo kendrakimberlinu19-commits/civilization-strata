@@ -1,0 +1,11 @@
+.site-audio{position:fixed;top:18px;right:24px;z-index:160}
+.site-audio .sound-controls{display:flex;align-items:center;gap:8px;padding:4px 10px 4px 4px;background:#0a0b09bd;border:1px solid #8f795738;border-radius:28px;backdrop-filter:blur(6px)}
+.site-audio .sound-toggle{width:40px;height:40px;min-height:40px;padding:10px;color:#d4c5a8}
+.site-audio .sound-volume{height:24px;width:72px;background:transparent;margin:0}
+.site-audio .sound-volume::-webkit-slider-runnable-track{height:1px;background:#6e6555}
+.site-audio .sound-volume::-webkit-slider-thumb{width:7px;height:7px;margin-top:-3px}
+.site-audio .sound-volume::-moz-range-track{height:1px;background:#6e6555}
+.site-audio .sound-volume::-moz-range-thumb{width:7px;height:7px}
+.landing-open .site-audio{top:26px;right:calc(4% + 132px)}
+.tools-reading .site-audio{top:74px;right:28px}
+@media(max-width:700px){.site-audio{top:14px;right:16px}.site-audio .sound-volume{width:54px}.landing-open .site-audio{top:76px;right:24px}.tools-reading .site-audio{top:64px;right:20px}}

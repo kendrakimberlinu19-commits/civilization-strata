@@ -1,0 +1,83 @@
+/* Blank AI parchment is decorative; all copy remains selectable HTML. */
+dialog {
+  --ink: #362a1e;
+  --gold: #745027;
+  --muted: #685640;
+  --line: #795e3938;
+  width: min(1200px, 94vw);
+  max-height: 90svh;
+  padding: 0;
+  color: var(--ink);
+  background: #e9d4aa;
+  border: solid transparent;
+  border-width: 48px 18px;
+  border-image: url('assets/images/scroll/parchment-scroll.png') 90 28 fill / 48px 18px / 0 stretch;
+  box-shadow: 0 28px 90px #000b;
+  scrollbar-color: #8b6d43 #e6d1a9;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+dialog[open] { animation: scroll-unfurl 420ms cubic-bezier(.22,1,.36,1); }
+dialog::backdrop { background: #030303dc; backdrop-filter: blur(9px); }
+/* Keep global audio above the paper, clear of the scroll's close control. */
+dialog[open] .site-audio { top: 6px; right: 16px; }
+dialog .dialog-close {
+  z-index: 5;
+  top: 8px;
+  margin: 8px 10px -52px 0;
+  color: #503920;
+  border-color: #80613a66;
+  background: #f1dfbbef;
+  border-radius: 50%;
+}
+dialog .dialog-close:hover { background: #fbebcc; border-color: #654825; }
+dialog :focus-visible { outline: 2px solid #705027; outline-offset: 4px; }
+dialog .eyebrow, dialog .tags span { color: #745027; }
+dialog .detail-layout { align-items: start; }
+dialog .detail-layout figure {
+  min-height: 0;
+  padding: 40px 0 18px 24px;
+  background: transparent;
+}
+dialog .detail-layout figure img {
+  max-height: 64svh;
+  border: 6px solid #f4e4c5;
+  box-shadow: 0 6px 20px #49351b30;
+}
+dialog .detail-layout figcaption { color: #685640; padding: 18px 8px; }
+dialog .detail-layout article { padding: 36px 32px 40px; }
+dialog .detail-layout h2, dialog .project-copy h2, dialog .video-content h2,
+dialog .archive-directory h2 { color: #362a1e; }
+dialog .detail-summary, dialog .interpretation p, dialog .project-copy p,
+dialog .video-content > p:not(.eyebrow) { color: #493a2a; }
+dialog .interpretation h3, dialog .project-copy h3 { color: #745027; }
+dialog .source {
+  color: #66523b;
+  background: #b5986220;
+  border-left: 2px solid #92704366;
+  padding: 16px 18px;
+}
+dialog .project-copy { padding: 30px 44px 44px; }
+dialog .archive-directory { padding: 32px 38px; }
+dialog .archive-directory > section > h3 { color: #745027; }
+dialog .archive-card { background: #ead6b0; border-color: #99774855; color: #362a1e; }
+dialog .archive-card h3, dialog .archive-card p { color: #493a2a; }
+dialog .archive-card .card-meta { color: #705638; }
+dialog .video-trigger { color: #644621; border-color: #92704388; background: #f2dfba80; }
+dialog .video-content { padding: 32px 36px 44px; }
+dialog .video-empty { background: #b5986218; border-color: #92704366; color: #66523b; }
+dialog .video-empty p { color: #66523b; }
+@keyframes scroll-unfurl {
+  from { opacity: 0; clip-path: inset(18% 0); }
+  to { opacity: 1; clip-path: inset(0); }
+}
+@media(max-width:700px) {
+  dialog { width: 95vw; max-height: 89svh; border-width: 30px 9px; border-image-width: 30px 9px; }
+  dialog .detail-layout { grid-template-columns: 1fr; }
+  dialog .detail-layout figure { padding: 52px 14px 0; }
+  dialog .detail-layout figure img { max-height: 40svh; }
+  dialog .detail-layout article { padding: 18px 20px 28px; }
+  dialog .project-copy, dialog .archive-directory, dialog .video-content { padding: 52px 20px 28px; }
+  dialog .dialog-close { top: 8px; margin-right: 8px; }
+}
+@media(prefers-reduced-motion:reduce) { dialog[open] { animation: none; } }

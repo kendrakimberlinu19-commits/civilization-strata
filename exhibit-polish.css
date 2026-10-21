@@ -255,3 +255,41 @@ dialog[open] { animation: expand 220ms var(--ease-response); }
  .active-caption { left:24%; top:auto; bottom:38px; }
 }
 @media(prefers-reduced-motion:reduce) { .dial-progress { transition:none; } .dial-texture { transform:none; } }
+/* Six themes share the existing stone dial and editable HTML controls. */
+.exhibit-bottom.archive-dial {width:270px;height:270px}
+.landing-footer>p {flex-wrap:wrap;row-gap:8px}
+.story-hero-bottom>span {max-width:min(68%,720px);line-height:1.6}
+.story-film {max-width:1200px;margin:auto;padding-block:100px}
+.story-film h2 {font:400 clamp(28px,4vw,48px)/1.4 var(--font-display);color:#eee5d5;margin:22px 0}
+.story-film>p:not(.eyebrow) {max-width:36em;color:#bdb5a5;line-height:1.9;margin-bottom:28px}
+.story-film video {display:block;width:100%;max-height:75svh;aspect-ratio:16/9;background:#080909;border:1px solid #aa8a4f44}
+.diagram-stack .story-stack-pin {height:100svh}
+.diagram-stack .story-stack-layer {background:#080909;clip-path:none!important}
+.diagram-stack .story-stack-layer img {object-fit:contain!important;max-width:100%;height:100%;padding:30px 0 70px}
+.detail-basic {font:400 13px/1.8 var(--font-reading);color:#745b3e;max-width:36em}
+dialog .detail-gallery {display:flex;gap:8px;flex-wrap:wrap;padding:4px 0 20px}
+dialog .detail-gallery button {width:64px;height:58px;padding:3px;background:#ead7b1;border:1px solid #92704366}
+dialog .detail-gallery button[aria-pressed=true] {border:2px solid #694b27}
+dialog .detail-gallery img {width:100%;height:100%;object-fit:contain;border:0;box-shadow:none}
+dialog .source summary {cursor:pointer;color:#644621;min-height:30px;font-size:14px}
+dialog .source a {color:#67431c;text-underline-offset:3px}
+dialog .video-content video {width:100%;max-height:58svh;background:#080909;aspect-ratio:16/9;object-fit:contain}
+.video-theme-list {display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0;text-align:left}
+.video-theme-list button {flex:1 1 28%;font:400 13px/1.6 var(--font-reading);background:#ddc49644;border:1px solid #8a6c4655;color:#644621;padding:10px;min-height:44px}
+.video-theme-list button[aria-pressed=true] {background:#6b4d27;color:#fff0d0}
+@media(max-width:700px){
+ .exhibit-bottom.archive-dial {width:224px;height:224px;right:8px;bottom:10px}
+ .archive-dial .theme-progress button {width:65px}
+ .landing-footer>p {gap:7px 14px;max-width:340px}
+ .story-film {padding-block:60px}
+ .story-hero-bottom>span {max-width:65%;font-size:11px}
+ .video-theme-list button {flex-basis:42%}
+ .diagram-stack .story-stack-layer img {padding:30px 0 60px}
+}
+.story-hero-bottom {bottom:82px}
+@media(max-width:700px){.story-hero-bottom {bottom:82px}}
+@media(max-width:700px){
+ .museum-header .main-navigation {width:112px;white-space:nowrap}
+ .museum-header .main-navigation button {flex-shrink:0;white-space:nowrap}
+ .active-caption {bottom:100px}
+}
