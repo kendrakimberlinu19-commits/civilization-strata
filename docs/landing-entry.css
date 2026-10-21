@@ -20,28 +20,22 @@
 .landing-count{font:400 12px/1.6 var(--font-reading);color:#9f9a8c;margin:20px 0 0;font-variant-numeric:tabular-nums}.landing-count span{margin:0 12px;color:#bfa882}
 .landing-world{position:absolute;inset:0 0 0 43%;perspective:1200px;pointer-events:none;z-index:2}
 .landing-air{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 74%,#8d745516,transparent 62%)}
-.landing-objects{position:absolute;inset:0;perspective:1200px}
-.landing-object{position:absolute;left:var(--x);top:var(--y);width:var(--w);max-width:380px;aspect-ratio:2/3;transform:translate(-50%,-50%);perspective:1000px}
-.landing-object:nth-child(1),.landing-object:nth-child(4){filter:brightness(.72)}
-.landing-rise,.landing-spin{position:absolute;inset:0;transform-style:preserve-3d}
-.landing-rise{animation:landing-rise var(--duration) linear var(--phase) infinite}
-.landing-spin{animation:landing-turn calc(var(--duration)*.8) linear var(--phase) infinite}
-.landing-object .stone-object{transform:none;inset:0}.landing-object .actor-front{transform:translateZ(6px)}.landing-object .actor-back{transform:rotateY(180deg) translateZ(6px)}
-.landing-object .actor-edge{width:12px}.landing-object .actor-number{font-size:clamp(15px,2.1vw,34px)}.landing-object .actor-tab-number{font-size:clamp(8px,1vw,15px)}
-.landing-object .actor-front>img,.landing-object .actor-back>img{filter:drop-shadow(10px 22px 18px #0008)}
+.landing-objects{position:absolute;inset:0}
+
+.coin-volume{display:block;width:100%;height:100%}.coin-volume[hidden],.coin-fallbacks[hidden]{display:none}
+.coin-fallbacks{position:absolute;inset:0}.coin-fallback{position:absolute;left:var(--coin-x);top:var(--coin-y);width:var(--coin-r);aspect-ratio:1;transform:translate(-50%,-50%);background-image:url('assets/images/coins/antique-pattern-atlas.png');background-size:300% 300%;background-repeat:no-repeat}
+.landing-atmosphere{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+
 .landing-bed{position:absolute;left:-3%;right:-3%;bottom:-2%;height:23svh;z-index:3;background:url('assets/images/underground.webp') center 63%/100% auto;filter:brightness(.42) saturate(.6);mask-image:linear-gradient(transparent,#000 55%);pointer-events:none}
 .landing-footer{position:absolute;left:5.5%;right:4%;bottom:26px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:24px;font:400 11px/1.8 var(--font-reading);color:#aaa294;letter-spacing:.025em}
 .landing-footer p{display:flex;flex-wrap:wrap;gap:22px;margin:0}.landing-footer>span{font-size:10px}
 .landing-open #main,.landing-open .museum-header{visibility:hidden}.landing-open .gesture-control{visibility:hidden}
 .landing-open:has(.landing-leaving) #main,.landing-open:has(.landing-leaving) .museum-header{visibility:visible}
-.landing-leaving .landing-rise,.landing-leaving .landing-spin,.landing-still .landing-rise,.landing-still .landing-spin{animation-play-state:paused}
-@keyframes landing-rise{0%{transform:translateY(12svh);opacity:0}8%{opacity:1}90%{opacity:1}100%{transform:translateY(-15svh);opacity:0}}
-@keyframes landing-turn{from{transform:rotateZ(var(--roll)) rotateX(10deg) rotateY(var(--start))}to{transform:rotateZ(calc(var(--roll) + 8deg)) rotateX(-8deg) rotateY(calc(var(--start) + 360deg))}}
-@media(max-width:1100px) and (min-width:701px){.landing-copy{width:43%;left:4%}.landing-copy h1{font-size:64px}.landing-introduction{font-size:15px}.landing-top,.landing-footer{left:4%}.landing-world{left:45%}.landing-footer p{gap:14px}.landing-object{max-width:310px}}
-@media(max-height:650px) and (min-width:701px){.landing-top{top:20px}.landing-copy{top:50%}.landing-copy h1{font-size:58px}.landing-kicker{margin-bottom:16px}.landing-introduction{margin:18px 0;font-size:14px}.landing-count{margin-top:12px}.landing-footer{bottom:16px}.landing-object{max-width:250px}}
+@media(max-width:1100px) and (min-width:701px){.landing-copy{width:43%;left:4%}.landing-copy h1{font-size:64px}.landing-introduction{font-size:15px}.landing-top,.landing-footer{left:4%}.landing-world{left:45%}.landing-footer p{gap:14px}}
+@media(max-height:650px) and (min-width:701px){.landing-top{top:20px}.landing-copy{top:50%}.landing-copy h1{font-size:58px}.landing-kicker{margin-bottom:16px}.landing-introduction{margin:18px 0;font-size:14px}.landing-count{margin-top:12px}.landing-footer{bottom:16px}}
 @media(max-width:700px){
  .landing-entry{overflow-y:auto}.landing-screen{min-height:100svh;display:flex;flex-direction:column}.landing-top{top:20px;left:24px;right:24px}.landing-wordmark{font-size:19px}.landing-wordmark span{font-size:9px}.landing-pause{font-size:11px;padding:8px}
  .landing-copy{position:relative;left:auto;top:auto;transform:none;width:auto;max-width:none;padding:125px 24px 0}.landing-kicker{font-size:12px;margin-bottom:20px}.landing-copy h1{font-size:58px}.landing-copy h1>span{font-size:.7em;margin-top:10px}.landing-introduction{font-size:14px;line-height:1.9;max-width:24em;margin:24px 0}.landing-enter{min-height:56px;font-size:14px;padding-left:24px;gap:26px}.landing-enter i{width:40px;height:40px}.landing-count{font-size:11px;margin-top:16px}
- .landing-world{position:relative;inset:auto;width:100%;height:57svh;min-height:380px;margin-top:0;overflow:clip}.landing-object{width:calc(var(--w)*2.1);max-width:245px}.landing-object .actor-number{font-size:24px}.landing-object .actor-tab-number{font-size:11px}.landing-bed{height:170px;background-size:auto 800px;bottom:30px}.landing-footer{position:relative;inset:auto;padding:12px 24px 24px;display:block;font-size:10px}.landing-footer p{gap:10px 16px;margin-bottom:12px}.landing-footer>span{font-size:10px}
+ .landing-world{position:relative;inset:auto;width:100%;height:57svh;min-height:380px;margin-top:0;overflow:clip}.landing-bed{height:170px;background-size:auto 800px;bottom:30px}.landing-footer{position:relative;inset:auto;padding:12px 24px 24px;display:block;font-size:10px}.landing-footer p{gap:10px 16px;margin-bottom:12px}.landing-footer>span{font-size:10px}
 }
-@media(prefers-reduced-motion:reduce){.landing-rise,.landing-spin{animation:none}.landing-rise{opacity:1}.landing-spin{transform:rotateZ(var(--roll)) rotateY(var(--start))}.landing-enter,.landing-enter i{transition:none}}
+@media(prefers-reduced-motion:reduce){.landing-enter,.landing-enter i{transition:none}}
