@@ -1,0 +1,42 @@
+.manual-launch{position:fixed;left:24px;bottom:78px;z-index:151;display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid #8f7957;background:#11120f;color:#e5d1ad;font:400 .875rem/1.6 var(--font-reading);cursor:pointer;transition:background 180ms ease}
+.manual-launch svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.25}
+.manual-launch:hover{background:#28291f}.manual-launch:active{background:#3b3928}
+.manual-launch:focus-visible{outline:2px solid #ead6b0;outline-offset:4px}
+.landing-open .manual-launch{left:5.5%;bottom:22px}
+.tools-reading .manual-launch,.reading .manual-launch,.landing-pending .manual-launch{display:none}
+#guide-dialog{width:min(1080px,94vw)}
+.visitor-guide{padding:44px clamp(20px,4.5vw,64px) 36px}
+.guide-cover{max-width:38em;padding-bottom:36px}
+.guide-cover h2{font:500 clamp(2rem,4vw,3.5rem)/1.25 var(--font-display);margin:0 0 24px;color:#362a1e}
+.guide-cover h2 span{display:block;font-size:.65em;margin-top:8px;color:#745027}
+.guide-cover>p{font:400 1.0625rem/1.85 var(--font-reading);color:#493a2a;margin:0 0 18px}
+.guide-cover .guide-collection{font-size:.8125rem;font-variant-numeric:tabular-nums;color:#685640}
+.guide-layout{display:grid;grid-template-columns:180px minmax(0,1fr);gap:40px;align-items:start}
+.guide-nav{position:sticky;top:48px;display:flex;flex-direction:column;gap:4px}
+.guide-nav button{background:transparent;border:0;border-bottom:1px solid #795e3938;min-height:44px;padding:10px 0;text-align:left;color:#624821;font:400 .8125rem/1.6 var(--font-reading);cursor:pointer}
+.guide-nav button:hover{color:#302415;background:#87612812}
+.guide-body{min-width:0}
+.guide-body>section{padding:0 0 36px;margin:0 0 36px;border-bottom:1px solid #795e3938}
+.guide-body h3{font:500 clamp(1.25rem,2vw,1.5rem)/1.45 var(--font-display);margin:0 0 20px;color:#644721;text-wrap:balance}
+.guide-body p,.guide-body dd{font:400 1rem/1.85 var(--font-reading);color:#493a2a;max-width:36em}
+.guide-body p{margin:0 0 16px}
+.guide-body dl{margin:22px 0 0}.guide-body dl>div{margin:0 0 24px}
+.guide-body dt{font:500 1rem/1.6 var(--font-reading);margin-bottom:6px;color:#49351e}
+.guide-body dd{margin:0}
+.guide-themes{display:grid;grid-template-columns:1fr 1fr;list-style:none;padding:0;margin:24px 0;gap:16px 24px}
+.guide-themes li{display:flex;align-items:baseline;gap:14px;font:400 1rem/1.7 var(--font-reading);color:#493a2a}
+.guide-themes li span{font:400 .875rem/1.5 var(--font-index);color:#745027}
+.guide-themes strong{font-weight:500}
+.guide-table-wrap{overflow-x:auto;margin:24px 0}
+.guide-table-wrap table{border-collapse:collapse;width:100%;font:400 .875rem/1.8 var(--font-reading);color:#493a2a}
+.guide-table-wrap th,.guide-table-wrap td{padding:12px 10px;border-bottom:1px solid #795e3938;text-align:left;vertical-align:top}
+.guide-table-wrap th{font-weight:500;color:#644721}
+.guide-table-wrap th:first-child{width:25%;padding-left:0}
+.guide-body .guide-note{font-size:.8125rem;color:#685640;margin-top:20px}
+.guide-ending{padding-bottom:12px}
+.guide-ending>p{font-family:var(--font-display);font-size:1.25rem}
+.guide-ending button{display:flex;align-items:center;gap:20px;min-height:48px;padding:12px 0;background:transparent;border:0;border-bottom:1px solid #745027;color:#644721;font:500 .9375rem/1.6 var(--font-reading);cursor:pointer}
+@media(min-width:701px){.landing-open .landing-footer{bottom:90px}}
+@media(max-width:700px){.manual-launch{left:12px;bottom:68px;padding:8px 12px;font-size:.8125rem}.landing-open .manual-launch{left:24px;bottom:16px}.landing-open .landing-footer{padding-bottom:84px}.visitor-guide{padding-top:60px}.guide-layout{grid-template-columns:1fr;gap:32px}.guide-cover{padding-bottom:12px}.guide-nav{position:static;display:grid;grid-template-columns:1fr 1fr;column-gap:16px}.guide-body>section{padding-bottom:28px;margin-bottom:28px}.guide-body h3{font-size:1.25rem}.guide-themes{gap:12px}.guide-table-wrap th,.guide-table-wrap td{padding:10px 6px;font-size:.8125rem}}
+@media(prefers-reduced-motion:reduce){.manual-launch{transition:none}}
+

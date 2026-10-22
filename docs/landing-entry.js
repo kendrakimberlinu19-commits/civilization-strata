@@ -9,7 +9,8 @@ export function createLandingEntry({categories,cards,esc,onPrepare,onEntered,onO
  const scene=createCoinScene(root);
  let running=false,serial=0,animations=[],paused=false;
  const stopAnimations=()=>{animations.forEach(a=>a.cancel());animations=[]};
- function syncMotion(){scene.pause(paused||reduced.matches);root.classList.toggle('landing-still',paused||reduced.matches);pause.hidden=reduced.matches;pause.setAttribute('aria-pressed',String(paused));pause.innerHTML=paused?'继续动效 <span aria-hidden="true">▷</span>':'暂停动效 <span aria-hidden="true">Ⅱ</span>'}
+ function syncMotion(){scene.pause(paused||reduced.matches||!!document.querySelector('dialog[open]'));root.classList.toggle('landing-still',paused||reduced.matches);pause.hidden=reduced.matches;pause.setAttribute('aria-pressed',String(paused));pause.innerHTML=paused?'继续动效 <span aria-hidden="true">▷</span>':'暂停动效 <span aria-hidden="true">Ⅱ</span>'}
+ window.addEventListener('strata:dialog-open',syncMotion);window.addEventListener('strata:dialog-close',syncMotion);
  pause.onclick=()=>{paused=!paused;syncMotion()};reduced.addEventListener('change',syncMotion);syncMotion();
  function dismiss(){scene.stop();serial++;stopAnimations();running=false;root.hidden=true;root.inert=false;root.classList.remove('landing-leaving');button.disabled=false;button.removeAttribute('aria-busy');document.body.classList.remove('landing-open','landing-pending');main.inert=false;header.inert=false;}
  function open(){

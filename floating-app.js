@@ -1,3 +1,5 @@
+import {guideMarkup,bindGuide} from './visitor-guide.js';
+import {archiveModels} from './data/models.js';
 import {categories,cards,featureVideo,themeVideos} from './data/archive.js';
 import {exhibit} from './data/exhibit.js?v=20261020-dial';
 import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
@@ -9,8 +11,8 @@ import {themeStories} from './data/theme-stories.js';
 import {createArchiveEntry} from './archive-entry.js?v=20261020-photo-reveal';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const emit=(name,payload)=>window.dispatchEvent(new CustomEvent(`strata:${name}`,{detail:payload}));
-const main=document.querySelector('#main'),detail=document.querySelector('#detail'),archive=document.querySelector('#archive-dialog'),project=document.querySelector('#project-dialog'),video=document.querySelector('#video-dialog');
-const dialogs=[detail,archive,project,video],origins=new WeakMap();
+const main=document.querySelector('#main'),detail=document.querySelector('#detail'),archive=document.querySelector('#archive-dialog'),project=document.querySelector('#project-dialog'),video=document.querySelector('#video-dialog'),manual=document.querySelector('#guide-dialog');
+const dialogs=[detail,archive,project,video,manual],origins=new WeakMap();
 let gestureControl,landingEntry,audioControl;const modalOrder=[];
 main.innerHTML=`<section class="exhibit surface" aria-label="文明地层斜向档案展台"><aside class="exhibit-info" aria-label="当前档案信息"><h1 class="info-theme-heading" aria-label="当前主题"><span class="info-title-line"><span id="info-title-first"></span></span><span class="info-title-line"><span id="info-title-second"></span></span></h1><dl><div><dt>当前主题</dt><dd id="info-theme"></dd></div><div><dt>档案编号</dt><dd id="info-id"></dd></div><div><dt>收录档案</dt><dd id="info-count"></dd></div></dl><p>CIVILIZATION STRATA · 六层线索</p></aside><div id="floating-stage"></div><div class="active-caption"><h1><span id="theme-number"></span><i>/</i><span id="theme-title"></span></h1><button class="open-active">开启档案 ↗</button></div><div class="exhibit-bottom archive-dial"><img class="dial-texture" src="${esc(exhibit.navigationDial.imagePath)}" alt="" aria-hidden="true"><nav class="theme-progress" aria-label="主题轮盘"><svg class="dial-orbit" viewBox="0 0 240 240" aria-hidden="true"><circle class="dial-track" cx="120" cy="120" r="88"/><circle class="dial-progress" cx="120" cy="120" r="88" pathLength="100"/></svg>${categories.map((c,i)=>`<button data-theme="${esc(c.id)}" style="--dial-index:${i};left:${50+37*Math.sin(i*2*Math.PI/categories.length)}%;top:${50-37*Math.cos(i*2*Math.PI/categories.length)}%" aria-label="${c.number} ${esc(c.name)}"><b>${c.number}</b><span>${esc(c.name)}</span></button>`).join('')}</nav><div class="dial-centre"><span class="dial-kicker">地层索引</span><span id="dial-theme"></span><span id="theme-fraction"></span></div><div class="switch-controls"><button class="previous-theme" aria-label="上一份地层档案"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg></button><button class="next-theme" aria-label="下一份地层档案"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg></button></div></div></section>`;
 function updateTheme(c,index){document.querySelector('#dial-theme').textContent=c.name;document.querySelector('#info-title-first').textContent=c.name.slice(0,2);document.querySelector('#info-title-second').textContent=c.name.slice(2);document.querySelector('.info-theme-heading').setAttribute('aria-label',c.name);document.querySelector('#info-theme').textContent=c.name;document.querySelector('#info-id').textContent=`STRATUM ${c.number}`;document.querySelector('#info-count').textContent=`${String(cards.filter(x=>x.category===c.id).length).padStart(2,'0')} 份`;document.querySelector('#theme-number').textContent=c.number;document.querySelector('#theme-title').textContent=c.name;document.querySelector('#theme-fraction').textContent=`${c.number} / ${String(categories.length).padStart(2,'0')}`;document.querySelectorAll('[data-theme]').forEach(b=>{if(b.dataset.theme===c.id)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current')});document.querySelector('.previous-theme').disabled=index===0;document.querySelector('.next-theme').disabled=index===categories.length-1;}
@@ -44,6 +46,15 @@ function openCard(id){
 }
 archive.addEventListener('click',e=>{const b=e.target.closest('[data-card]');if(b)openCard(b.dataset.card)});
 function openProject(){project.innerHTML=`${closeButton(project,'关闭项目说明')}<article class="project-copy"><p class="eyebrow">ABOUT CIVILIZATION STRATA</p><h2 id="project-title">六层线索，<br>二十四份档案。</h2><p>沿着稻谷、城址、刻辞、陶范、壁画与码头，阅读过去的人如何生活、协作并与远方相遇。</p><section><h3>如何探索</h3><p>拖动档案袋，或使用左右箭头及主题轮盘切换。点击档案袋进入主题，向下阅读并打开遗存详情；关闭详情后回到原来的阅读位置。也可使用触摸、键盘和手势探索。</p></section><section><h3>资料与阅读</h3><p>六个主题各收录四份档案，事实说明与策展解读分开组织。主题顺序是一种阅读线索，不代表真实地层年代。图解用于理解关系与工艺，具体年代和地点以分件资料为准；资料来源可在详情中展开查看。</p></section><section><h3>声音与影像</h3><p>每层均设有独立短片，可在内页播放或集中浏览。声音默认开启，首次点击或按键后启动，可随时静音或调节音量。</p><button class="video-trigger">▷ 浏览六层短片</button></section></article>`;bindClose(project);project.querySelector('.video-trigger').onclick=()=>openVideo();show(project,'project');}
+
+const manualTrigger=document.createElement('button');
+manualTrigger.className='manual-launch';manualTrigger.setAttribute('aria-haspopup','dialog');manualTrigger.setAttribute('aria-controls','guide-dialog');
+manualTrigger.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v13H8a3 3 0 1 0 3 3M6 4a2 2 0 1 0-4 0v3h4V4Zm12 13h2v3a2 2 0 0 1-2 2H8M9 8h6M9 11h6"/></svg><span>参观手册</span>';
+document.body.append(manualTrigger);
+manualTrigger.onclick=()=>{
+ manual.innerHTML=closeButton(manual,'关闭参观手册')+guideMarkup({categories,cards,models:archiveModels,esc});
+ bindClose(manual);bindGuide(manual);show(manual,landingEntry?.isOpen?'home':'archive');manual.scrollTop=0;
+};
 
 function openVideo(id){
  const chosen=themeVideos.find(v=>v.id===id)||themeVideos[0];
