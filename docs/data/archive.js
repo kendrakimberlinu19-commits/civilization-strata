@@ -1465,23 +1465,27 @@ export const themeVideos = [
     "id": "tools",
     "number": "01",
     "title": "一粒稻谷之后",
-    "videoPath": "assets/videos/s01.mp4",
+    "videoPath": "assets/videos/s01-h264.mp4",
     "poster": "assets/images/layers/s01/hero.webp",
     "duration": 12.5,
     "description": "从稻谷、农具与木构件，认识食物生产如何连接劳动、居住和水域生活。",
     "source": "用户提供的 01 文件夹视频",
-    "sha256": "ecd7f72b9ffe9a574a37313021de28282b0611d4efb96856086e21c6957abeaa"
+    "originalSha256": "ecd7f72b9ffe9a574a37313021de28282b0611d4efb96856086e21c6957abeaa",
+    "encoding": "H.264 / AAC; yuv420p; faststart",
+    "sha256": "88f30c1e072070a83df8d920d1b593a5f26cd290d959bcea19e0f95eb8f8afe8"
   },
   {
     "id": "ritual",
     "number": "02",
     "title": "一座城的共同劳动",
-    "videoPath": "assets/videos/s02.mp4",
+    "videoPath": "assets/videos/s02-h264.mp4",
     "poster": "assets/images/layers/s02/hero.webp",
     "duration": 12.5,
     "description": "从古城、水利、墓地与玉器，观察共同建设如何伴随组织和社会差异。",
     "source": "用户提供的 02 文件夹视频",
-    "sha256": "a930d53e8243fdad1a38307f5fbef006a49d503bd39b8171cefffff882f5b8f2"
+    "originalSha256": "a930d53e8243fdad1a38307f5fbef006a49d503bd39b8171cefffff882f5b8f2",
+    "encoding": "H.264 / AAC; yuv420p; faststart",
+    "sha256": "82ce9bd87c786d138b7384fe821a36e6a5e347bd17fdebc592eff1047cb4472d"
   },
   {
     "id": "cities",

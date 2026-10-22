@@ -41,7 +41,7 @@ export const themeStories = {
     "nextName": "定居与协作",
     "videoId": "tools",
     "videoTitle": "一粒稻谷之后",
-    "videoPath": "assets/videos/s01.mp4",
+    "videoPath": "assets/videos/s01-h264.mp4",
     "videoDuration": 12.5
   },
   "ritual": {
@@ -86,7 +86,7 @@ export const themeStories = {
     "nextName": "文字与决策",
     "videoId": "ritual",
     "videoTitle": "一座城的共同劳动",
-    "videoPath": "assets/videos/s02.mp4",
+    "videoPath": "assets/videos/s02-h264.mp4",
     "videoDuration": 12.5
   },
   "cities": {
