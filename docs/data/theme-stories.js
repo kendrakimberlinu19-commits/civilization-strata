@@ -131,8 +131,8 @@ export const themeStories = {
     "nextName": "材料与技艺",
     "videoId": "cities",
     "videoTitle": "刻在骨上的不确定",
-    "videoPath": "assets/videos/s03.mp4",
-    "videoDuration": 6.7
+    "videoPath": "assets/videos/s03-20261022.mp4",
+    "videoDuration": 10.08
   },
   "arts": {
     "id": "arts",
@@ -176,8 +176,8 @@ export const themeStories = {
     "nextName": "信仰与图像",
     "videoId": "arts",
     "videoTitle": "器物背后的工序",
-    "videoPath": "assets/videos/s04.mp4",
-    "videoDuration": 9.4
+    "videoPath": "assets/videos/s04-20261022.mp4",
+    "videoDuration": 10.08
   },
   "belief": {
     "id": "belief",

@@ -1491,23 +1491,23 @@ export const themeVideos = [
     "id": "cities",
     "number": "03",
     "title": "刻在骨上的不确定",
-    "videoPath": "assets/videos/s03.mp4",
+    "videoPath": "assets/videos/s03-20261022.mp4",
     "poster": "assets/images/layers/s03/hero.webp",
-    "duration": 6.7,
+    "duration": 10.08,
     "description": "以天气、农事与军事记录，观察商王如何询问、判断并记下行动。",
     "source": "用户提供的 03 文件夹视频",
-    "sha256": "a77eb0cf57c35b9bdc6b02e13d9419a86bf31a1344633227056dae82b50d04e8"
+    "sha256": "1c9056878a8e54fa3f35e1cfa643732950047cf7e90c6a0f019fc3e09b44f6e4"
   },
   {
     "id": "arts",
     "number": "04",
     "title": "器物背后的工序",
-    "videoPath": "assets/videos/s04.mp4",
+    "videoPath": "assets/videos/s04-20261022.mp4",
     "poster": "assets/images/layers/s04/hero.webp",
-    "duration": 9.4,
+    "duration": 10.08,
     "description": "从陶范到成品，理解形状如何被转印，经验如何进入工序。",
     "source": "用户提供的 04 文件夹视频",
-    "sha256": "15211391e36c2cf5c6068fcec5728d1f28094bc561948b46cee6d595f3ddc469"
+    "sha256": "a45f39423e815a4847db5587d3e2637e97d87c71109b9ea1f5c5e1345235cf1c"
   },
   {
     "id": "belief",
