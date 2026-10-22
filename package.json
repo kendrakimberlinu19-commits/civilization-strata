@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.mjs",
     "start:lan": "node server.mjs --lan",
-    "test": "node --test tests/check-data.mjs tests/deck-physics.mjs tests/gesture-logic.mjs tests/coin-mesh.mjs",
+    "test": "node --test tests/check-data.mjs tests/deck-physics.mjs tests/gesture-logic.mjs tests/coin-mesh.mjs tests/models.mjs",
     "build": "node scripts/build-static.mjs"
   }
 }

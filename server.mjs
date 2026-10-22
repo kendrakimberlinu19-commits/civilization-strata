@@ -4,14 +4,15 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {networkInterfaces} from 'node:os';
 const root=path.dirname(fileURLToPath(import.meta.url)),port=Number(process.env.PORT||4173);
-const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.wasm':'application/wasm','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.webp':'image/webp','.png':'image/png','.mp4':'video/mp4','.webm':'video/webm'};
-const publicFiles=new Set(['coin-scene.js','data/landing-coins.js','sound-effects.css','scroll-dialog.css','typography.css','landing-entry.js','landing-entry.css','gesture-control.js','gesture-control.css','gesture-logic.js','index.html','styles.css','floating-exhibit.css','exhibit-polish.css','tools-story.css','tools-story.js','archive-entry.js','archive-entry.css','data/tools-story.js','data/theme-stories.js','floating-app.js','floating-deck.js','ambient-sound.js','data/exhibit.js','exploration.css','archive-deck.css','app.js','archive-deck.js','stone-deck.js','stone-dust.js','deck-physics.js','stone-deck.css','data/sleeves.js','scroll-scene.js','data/archive.js','data/exploration.js']);
+const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.wasm':'application/wasm','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.woff2':'font/woff2','.txt':'text/plain; charset=utf-8','.webp':'image/webp','.png':'image/png','.glb':'model/gltf-binary','.mp4':'video/mp4','.webm':'video/webm'};
+const publicFiles=new Set(['model-gallery.js','model-gallery.css','data/models.js','coin-scene.js','data/landing-coins.js','sound-effects.css','scroll-dialog.css','typography.css','landing-entry.js','landing-entry.css','gesture-control.js','gesture-control.css','gesture-logic.js','index.html','styles.css','floating-exhibit.css','exhibit-polish.css','tools-story.css','tools-story.js','archive-entry.js','archive-entry.css','data/tools-story.js','data/theme-stories.js','floating-app.js','floating-deck.js','ambient-sound.js','data/exhibit.js','exploration.css','archive-deck.css','app.js','archive-deck.js','stone-deck.js','stone-dust.js','deck-physics.js','stone-deck.css','data/sleeves.js','scroll-scene.js','data/archive.js','data/exploration.js']);
 const handler=async(req,res)=>{try{
  const url=new URL(req.url,'http://localhost');
  const relative=decodeURIComponent(url.pathname).replace(/^\/+/, '')||'index.html';
  const file=path.resolve(root,relative);
+ const modelAsset=/^assets\/models\/[a-z0-9/.-]+\.(glb|webp)$/i.test(relative)||/^assets\/vendor\/model-viewer\/[a-z0-9/.-]+\.(js|wasm)$/i.test(relative);
  const media=/^assets\/(images|videos)\/[\w\-./\u4e00-\u9fff ]+\.(webp|png|jpe?g|mp4|webm)$/i.test(relative);
- if(!file.startsWith(root+path.sep)||(!publicFiles.has(relative)&&!media&&!/^assets\/fonts\/[a-z0-9.-]+\.(woff2|txt|md)$/i.test(relative)&&!/^assets\/gesture\/[\w./-]+\.(mjs|js|wasm|task|md|txt)$/.test(relative))){res.writeHead(403);return res.end('Forbidden')}
+ if(!file.startsWith(root+path.sep)||(!publicFiles.has(relative)&&!media&&!modelAsset&&!/^assets\/fonts\/[a-z0-9.-]+\.(woff2|txt|md)$/i.test(relative)&&!/^assets\/gesture\/[\w./-]+\.(mjs|js|wasm|task|md|txt)$/.test(relative))){res.writeHead(403);return res.end('Forbidden')}
  const bytes=await readFile(file);
  const headers={'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':'no-cache','Accept-Ranges':'bytes'};
  if(req.headers.range){

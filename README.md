@@ -33,3 +33,9 @@ GitHub Pages 从 main 分支的 docs/ 目录发布，仓库根目录为可编辑
 ## 字体
 
 字体文件随站点提供，不依赖字体 CDN。标题为思源宋体的网页子集，正文和控件为思源黑体子集，编号保留 Georgia。统一样式位于 typography.css；assets/fonts/ 中保留字体和原始 OFL 许可。修改大量文案后需重建字形子集；未覆盖字形采用系统回退。详见 assets/fonts/README.md。
+
+## 三维观察
+
+六个主题的内页末尾各有两个可操作模型，共12件。可从目录选择“三维观察”，点击载入后拖动旋转、滚轮或双指缩放，也可使用方向键和视角按钮。模型不自动旋转，退出内页释放查看器。
+
+`data/models.js` 管理名称、主题、模型路径、预览图、初始视角与来源；`assets/models/` 为网页副本，采用 Draco 几何压缩和 2048px WebP 贴图，合计约14.37MB。原始 GLB 保留在用户本机，不进入发布仓库。`model-gallery.js`、`model-gallery.css` 实现展台，首次点击才加载查看器和模型。查看器及解码器位于 `assets/vendor/model-viewer/`，随网站本地提供。

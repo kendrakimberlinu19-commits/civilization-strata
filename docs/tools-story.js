@@ -1,3 +1,4 @@
+import {modelGalleryMarkup,mountModelGallery} from './model-gallery.js';
 export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,onAll,emit}) {
  const selected=copy.cardIds.map(id=>cards.find(c=>c.id===id)).filter(Boolean);
  const contact=copy.contactCardIds.map(id=>selected.find(c=>c.id===id)).filter(Boolean);
@@ -9,7 +10,7 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
  const arrow='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>';
  page.innerHTML=`
   <header class="story-top"><button class="story-back" aria-label="返回石质档案展台"><span aria-hidden="true">←</span> 返回档案展台</button><span>文明地层 / STRATUM ${esc(copy.number)}</span><button class="story-menu-toggle" aria-expanded="false" aria-controls="story-menu">目录 <span aria-hidden="true">＋</span></button></header>
-  <nav class="story-menu" id="story-menu" aria-label="内页目录" hidden><button data-jump="story-entry">地层入口</button><button data-jump="story-records">遗存档案</button><button data-jump="story-material">材料阅读</button><button data-story-all>全部地层档案</button><button data-story-video>本层短片</button></nav>
+  <nav class="story-menu" id="story-menu" aria-label="内页目录" hidden><button data-jump="story-entry">地层入口</button><button data-jump="story-records">遗存档案</button><button data-jump="story-material">材料阅读</button><button data-jump="story-models">三维观察</button><button data-story-all>全部地层档案</button><button data-story-video>本层短片</button></nav>
   <div class="story-reader-progress" aria-hidden="true"><span></span></div>
   <section class="story-hero" id="story-entry" aria-labelledby="tools-page-title">
    <div class="story-hero-pin">
@@ -32,8 +33,9 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
    <div class="story-material-heading"><h2 id="story-material-title">${copy.materialTitle.map(t=>esc(t).replace('，','，<br>')).join('<br>')}</h2><p>${esc(copy.materialText)}</p></div>
    <div class="story-stack diagram-stack"><div class="story-stack-pin"><figure class="story-stack-layer"><img src="${esc(copy.diagramImage)}" alt="${esc(copy.name)}关系与方法图解" loading="lazy" decoding="async"><figcaption><span>关系与方法</span><span>图解辅助阅读 · 不按比例</span></figcaption></figure><div class="story-stack-label" aria-hidden="true">MATERIAL STUDIES <span>01 / 01</span></div></div></div>
   </section>
-  <section class="story-film story-section" id="story-film"><p class="eyebrow">STRATUM ${esc(copy.number)} / FILM</p><h2>${esc(copy.videoTitle)}</h2><p>${esc(copy.description)}</p><video controls playsinline preload="none" poster="${esc(copy.heroImage)}" src="${esc(copy.videoPath)}" aria-label="${esc(copy.videoTitle)}"></video></section><section class="story-closing-image"><img src="${esc(copy.endingImage)}" alt="${esc(copy.name)}尾章" loading="lazy" decoding="async"></section><section class="story-outro story-section"><p>${esc(copy.closing)}</p><div class="story-outro-links"><button data-story-video>本层短片 <span>${esc(copy.videoTitle)}</span> ${arrow}</button><button data-story-next>下一地层 · ${esc(copy.nextName)} ${arrow}</button></div><footer><span>文明地层 · 资料与解读</span><button data-jump="story-entry">返回顶部 ↑</button></footer><div class="story-end-word" aria-hidden="true" style="background-image:url('${esc(copy.endingImage)}')">${copy.title.map(esc).join('')}</div></section>`.replace(/(id|aria-labelledby|aria-controls)="([^"]+)"/g,(_,attr,id)=>`${attr}="${copy.id}-${id}"`);
+  <section class="story-film story-section" id="story-film"><p class="eyebrow">STRATUM ${esc(copy.number)} / FILM</p><h2>${esc(copy.videoTitle)}</h2><p>${esc(copy.description)}</p><video controls playsinline preload="none" poster="${esc(copy.heroImage)}" src="${esc(copy.videoPath)}" aria-label="${esc(copy.videoTitle)}"></video></section><section class="story-closing-image"><img src="${esc(copy.endingImage)}" alt="${esc(copy.name)}尾章" loading="lazy" decoding="async"></section>${modelGalleryMarkup(copy,esc)}<section class="story-outro story-section"><p>${esc(copy.closing)}</p><div class="story-outro-links"><button data-story-video>本层短片 <span>${esc(copy.videoTitle)}</span> ${arrow}</button><button data-story-next>下一地层 · ${esc(copy.nextName)} ${arrow}</button></div><footer><span>文明地层 · 资料与解读</span><button data-jump="story-entry">返回顶部 ↑</button></footer><div class="story-end-word" aria-hidden="true" style="background-image:url('${esc(copy.endingImage)}')">${copy.title.map(esc).join('')}</div></section>`.replace(/(id|aria-labelledby|aria-controls)="([^"]+)"/g,(_,attr,id)=>`${attr}="${copy.id}-${id}"`);
  document.body.append(page);
+ const modelGallery=mountModelGallery(page,copy,emit);
  page.querySelector('.story-stack').style.height='100svh';
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const heroSection=page.querySelector('.story-hero'),records=[...page.querySelectorAll('.story-record')],timeline=page.querySelector('.story-timeline'),stack=page.querySelector('.story-stack'),layers=[...page.querySelectorAll('.story-stack-layer')];
@@ -106,6 +108,6 @@ export function createThemeStory({copy,cards,esc,onCard,onVideo,onBack,onNext,on
   get element(){return page},
   get isOpen(){return !page.hidden},
   open(){opener=document.activeElement;page.hidden=false;document.body.classList.add('tools-reading');document.querySelector('.museum-header').inert=true;document.querySelector('#main').inert=true;page.scrollTop=0;measuredWidth=0;page.focus({preventScroll:true});update();emit('category-enter',{categoryId:copy.id,presentation:'editorial-scroll'})},
-  close(){page.querySelectorAll('video').forEach(v=>v.pause());page.hidden=true;textVisibility.disconnect();toggleMenu(false);document.body.classList.remove('tools-reading');document.querySelector('.museum-header').inert=false;document.querySelector('#main').inert=false;if(frame)cancelAnimationFrame(frame);frame=0;if(opener?.isConnected)opener.focus({preventScroll:true})}
+  close(){modelGallery.close();page.querySelectorAll('video').forEach(v=>v.pause());page.hidden=true;textVisibility.disconnect();toggleMenu(false);document.body.classList.remove('tools-reading');document.querySelector('.museum-header').inert=false;document.querySelector('#main').inert=false;if(frame)cancelAnimationFrame(frame);frame=0;if(opener?.isConnected)opener.focus({preventScroll:true})}
  };
 }

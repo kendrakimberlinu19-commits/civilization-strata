@@ -4,7 +4,7 @@ import {createFloatingDeck} from './floating-deck.js?v=20261020-dial-spin';
 import {createAmbientSound} from './ambient-sound.js?v=20261022-book-sound';
 import {createGestureControl} from './gesture-control.js?v=20261020-gesture-responsive';
 import {createLandingEntry} from './landing-entry.js?v=20261021-coins';
-import {createThemeStory} from './tools-story.js?v=20261020-photo-reveal';
+import {createThemeStory} from './tools-story.js?v=20261022-models';
 import {themeStories} from './data/theme-stories.js';
 import {createArchiveEntry} from './archive-entry.js?v=20261020-photo-reveal';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

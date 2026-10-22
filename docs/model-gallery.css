@@ -1,0 +1,38 @@
+/* A pair of quiet study plates, appended to each existing archive longform. */
+.story-models{padding-top:clamp(64px,9vw,144px);padding-bottom:clamp(56px,8vw,120px)}
+.model-section-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:48px}
+.model-section-heading h2{font:500 clamp(2rem,4.5vw,4.5rem)/1.2 var(--font-display);margin:0;color:#eee8dc}
+.model-section-heading>p{font:400 1rem/1.85 var(--font-reading);color:#c8c0b0;max-width:28em;margin:0}
+.model-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px)}
+.model-study{min-width:0}
+.model-study>header{display:flex;align-items:baseline;gap:16px;padding:0 0 18px}
+.model-index{font:400 .875rem/1.4 var(--font-index);font-variant-numeric:tabular-nums;color:#c7ac7d}
+.model-study h3{font:500 clamp(1.25rem,2vw,1.75rem)/1.4 var(--font-display);margin:0;color:#e8e1d4}
+.model-stage{height:clamp(320px,36vw,560px);position:relative;background:#eeece5;overflow:hidden;color:#292a24}
+.model-preview{position:absolute;width:100%;height:100%;object-fit:contain;inset:0;transition:opacity 180ms ease}
+.model-surface{position:absolute;inset:0}
+.model-surface model-viewer{display:block;width:100%;height:100%;background:#eeece5;--poster-color:#eeece5;--progress-bar-height:0;touch-action:none}
+.model-stage.is-loaded .model-preview{visibility:hidden}
+.model-stage.is-loading .model-preview{opacity:.3}
+.model-load{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;border:1px solid #7e7158;background:#171a15;color:#eee8d8;min-height:48px;padding:10px 22px;white-space:nowrap;font:500 .875rem/1.5 var(--font-reading);cursor:pointer;transition:background 180ms ease}
+.model-load svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.25}
+.model-load:hover{background:#35382c}
+.model-load:active{background:#4b4a36}
+.model-load:disabled{visibility:hidden}
+.model-load[hidden],.model-progress[hidden],.model-controls[hidden]{display:none}
+.model-progress{position:absolute;left:24px;right:24px;bottom:24px;text-align:center;pointer-events:none;font-size:.875rem;line-height:1.7;color:#383a31}
+.model-progress>span{display:block;width:40px;height:1px;margin:12px auto;background:#77603c;animation:model-loading 1s ease-in-out infinite alternate}
+.model-progress p{margin:0}
+.model-stage.has-error .model-progress{bottom:90px;color:#633f21}
+.model-stage.has-error .model-progress>span{display:none}
+.model-controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;padding-top:12px}
+.model-controls>div{display:flex;flex-wrap:wrap;gap:4px}
+.model-controls button{font:400 .8125rem/1.5 var(--font-reading);color:#d5c6a7;background:none;border:0;border-bottom:1px solid #766547;min-height:44px;padding:8px 10px;cursor:pointer}
+.model-controls button:hover{color:#fff2d8;background:#22251c}
+.model-study button:focus-visible,.model-surface model-viewer:focus-visible{outline:2px solid #c5aa78;outline-offset:3px}
+.model-description{font:400 1rem/1.85 var(--font-reading);color:#d0c8b9;margin:20px 0 8px;max-width:32em}
+.model-help{font:400 .8125rem/1.7 var(--font-reading);color:#b9b19f;margin:0;max-width:38em}
+@keyframes model-loading{from{transform:scaleX(.4);opacity:.4}to{transform:scaleX(1);opacity:1}}
+@media(max-width:700px){.model-section-heading{display:block;margin-bottom:32px}.model-section-heading>p{margin-top:20px}.model-pair{grid-template-columns:1fr;gap:48px}.model-stage{height:380px;max-height:65svh}.model-study>header{gap:12px}.model-controls{gap:4px}.model-controls button{padding:8px}.model-help{max-width:30em}}
+@media(prefers-reduced-motion:reduce){.model-preview,.model-load{transition:none}.model-progress>span{animation:none}}
+

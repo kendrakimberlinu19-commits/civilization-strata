@@ -1,10 +1,10 @@
 /* Local, renamed OFL subsets of Adobe Source Han Serif / Sans. */
 @font-face {
- font-family:'Strata Exhibition Serif';src:url('assets/fonts/strata-serif-vf.woff2') format('woff2');
+ font-family:'Strata Exhibition Serif';src:url('assets/fonts/strata-serif-vf.woff2?v=20261022-models') format('woff2');
  font-style:normal;font-weight:200 900;font-display:swap;
 }
 @font-face {
- font-family:'Strata Exhibition Sans';src:url('assets/fonts/strata-sans-vf.woff2') format('woff2');
+ font-family:'Strata Exhibition Sans';src:url('assets/fonts/strata-sans-vf.woff2?v=20261022-models') format('woff2');
  font-style:normal;font-weight:100 900;font-display:swap;
 }
 :root {
