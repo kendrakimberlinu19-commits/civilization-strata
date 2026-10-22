@@ -1,8 +1,9 @@
-.manual-launch{position:fixed;left:24px;bottom:78px;z-index:151;display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid #8f7957;background:#11120f;color:#e5d1ad;font:400 .875rem/1.6 var(--font-reading);cursor:pointer;transition:background 180ms ease}
+.manual-launch{position:fixed;left:24px;bottom:78px;z-index:151;display:none;align-items:center;gap:10px;min-height:44px;padding:10px 16px;border:1px solid #8f7957;background:#11120f;color:#e5d1ad;font:400 .875rem/1.6 var(--font-reading);cursor:pointer;transition:background 180ms ease}
 .manual-launch svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.25}
 .manual-launch:hover{background:#28291f}.manual-launch:active{background:#3b3928}
 .manual-launch:focus-visible{outline:2px solid #ead6b0;outline-offset:4px}
-.landing-open .manual-launch{left:5.5%;bottom:22px}
+.landing-open .manual-launch{display:flex;left:5.5%;bottom:22px}
+.landing-open:has(.landing-leaving) .manual-launch{display:none}
 .tools-reading .manual-launch,.reading .manual-launch,.landing-pending .manual-launch{display:none}
 #guide-dialog{width:min(1080px,94vw)}
 .visitor-guide{padding:44px clamp(20px,4.5vw,64px) 36px}
